@@ -545,13 +545,13 @@ SELECT TOP 20 * FROM dbo.vw_UnidadesDetalle ORDER BY IdUnidad;
 SELECT * FROM dbo.vw_ResumenActivosPorEstado;
 GO
 
-/* ---------------------------------------------------------------
-   8. OPCIONAL — limpieza, SOLO cuando tu aplicación ya use UnidadesActivo
-      y hayas comprobado la verificación de arriba. Está comentado a propósito.
-   ---------------------------------------------------------------
--- DROP VIEW dbo.vw_ResumenActivosPorSalon;   -- (se recrea: depende de vw_ActivosPorSalon, sigue funcionando; no hace falta borrarla)
--- DROP TABLE dbo.SalonClases;
--- DROP TABLE dbo.EquiposIndividualesSalon;
--- ALTER TABLE dbo.GestionActivos DROP CONSTRAINT <FK hacia Estados>;   -- ver nombre en sys.foreign_keys
--- ALTER TABLE dbo.GestionActivos DROP COLUMN IdEstado;                 -- requiere ajustar/eliminar trg_AuditoriaActivos
-   --------------------------------------------------------------- */
+-- ---------------------------------------------------------------
+--    8. OPCIONAL — limpieza, SOLO cuando tu aplicación ya use UnidadesActivo
+--       y hayas comprobado la verificación de arriba. Está comentado a propósito.
+--    ---------------------------------------------------------------
+-- -- DROP VIEW dbo.vw_ResumenActivosPorSalon;   -- (se recrea: depende de vw_ActivosPorSalon, sigue funcionando; no hace falta borrarla)
+-- -- DROP TABLE dbo.SalonClases;
+-- -- DROP TABLE dbo.EquiposIndividualesSalon;
+-- -- ALTER TABLE dbo.GestionActivos DROP CONSTRAINT <FK hacia Estados>;   -- ver nombre en sys.foreign_keys
+-- -- ALTER TABLE dbo.GestionActivos DROP COLUMN IdEstado;                 -- requiere ajustar/eliminar trg_AuditoriaActivos
+   --------------------------------------------------------------- 
