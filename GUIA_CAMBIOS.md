@@ -25,23 +25,17 @@ Qué hace, en resumen:
 
 ## B. Diseño (Designer)
 
-**No cambié ningún archivo `.Designer.cs`.** Los dos cambios visuales se hacen por código en `frmGestionActivos.cs`:
+Todo lo visual está en **`frmGestionActivos.Designer.cs`** (los controles ya no se crean por código). Puedes reemplazar el archivo completo (está en `cs/forms/`) o aplicar estos cuatro cambios a mano en tu Designer:
 
-1. El combo de estado del formulario de catálogo (`lblEstado` / `cmbEstado`) se **oculta** en `Load`.
-2. El panel "Estado de la unidad seleccionada + botón Cambiar estado" se **crea por código** en `CrearPanelEstadoUnidad()`.
-
-Así no tienes que editar el Designer. Si prefieres que esos controles existan en el Designer (para moverlos con el diseñador visual), esta es la versión equivalente.
-
-**Paso 1.** En `frmGestionActivos.Designer.cs`, al final con los otros campos:
+**1. Campos**, al final de la clase (junto a `private Label lblKpi5Txt;`):
 
 ```csharp
-        private System.Windows.Forms.Panel pnlEstadoUnidad;
-        private System.Windows.Forms.Label lblEstadoUnidad;
-        private System.Windows.Forms.ComboBox cmbEstadoUnidad;
-        private System.Windows.Forms.Button btnCambiarEstadoUnidad;
+        // Cambio de estado de una unidad (ficha > Ubicación)
+        private Panel pnlEstadoUnidad; private Label lblEstadoUnidad;
+        private ComboBox cmbEstadoUnidad; private Button btnCambiarEstadoUnidad;
 ```
 
-**Paso 2.** En `InitializeComponent()`, junto a los demás `new`:
+**2. En `InitializeComponent()`**, justo debajo de `this.dgvUbicacion = new System.Windows.Forms.DataGridView();`:
 
 ```csharp
             this.pnlEstadoUnidad = new System.Windows.Forms.Panel();
@@ -50,54 +44,76 @@ Así no tienes que editar el Designer. Si prefieres que esos controles existan e
             this.btnCambiarEstadoUnidad = new System.Windows.Forms.Button();
 ```
 
-**Paso 3.** Configuración (después de la configuración de `dgvUbicacion`), y agregar el panel a la pestaña:
+y debajo de `this.tabUbicacion.SuspendLayout();`:
 
 ```csharp
-            // pnlEstadoUnidad
-            this.pnlEstadoUnidad.BackColor = System.Drawing.Color.FromArgb(27, 29, 38);
-            this.pnlEstadoUnidad.Controls.Add(this.lblEstadoUnidad);
-            this.pnlEstadoUnidad.Controls.Add(this.cmbEstadoUnidad);
-            this.pnlEstadoUnidad.Controls.Add(this.btnCambiarEstadoUnidad);
-            this.pnlEstadoUnidad.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlEstadoUnidad.Name = "pnlEstadoUnidad";
-            this.pnlEstadoUnidad.Size = new System.Drawing.Size(1196, 34);
-            // lblEstadoUnidad
-            this.lblEstadoUnidad.AutoSize = true;
-            this.lblEstadoUnidad.ForeColor = System.Drawing.Color.White;
-            this.lblEstadoUnidad.Location = new System.Drawing.Point(8, 9);
-            this.lblEstadoUnidad.Name = "lblEstadoUnidad";
-            this.lblEstadoUnidad.Text = "Estado de la unidad seleccionada:";
-            // cmbEstadoUnidad
-            this.cmbEstadoUnidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbEstadoUnidad.Location = new System.Drawing.Point(250, 5);
-            this.cmbEstadoUnidad.Name = "cmbEstadoUnidad";
-            this.cmbEstadoUnidad.Size = new System.Drawing.Size(200, 25);
-            // btnCambiarEstadoUnidad
-            this.btnCambiarEstadoUnidad.BackColor = System.Drawing.Color.FromArgb(0, 120, 212);
-            this.btnCambiarEstadoUnidad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarEstadoUnidad.ForeColor = System.Drawing.Color.White;
-            this.btnCambiarEstadoUnidad.Location = new System.Drawing.Point(460, 4);
-            this.btnCambiarEstadoUnidad.Name = "btnCambiarEstadoUnidad";
-            this.btnCambiarEstadoUnidad.Size = new System.Drawing.Size(130, 26);
-            this.btnCambiarEstadoUnidad.Text = "Cambiar estado";
-            this.btnCambiarEstadoUnidad.UseVisualStyleBackColor = false;
-            this.btnCambiarEstadoUnidad.Click += new System.EventHandler(this.btnCambiarEstadoUnidad_Click);
+            this.pnlEstadoUnidad.SuspendLayout();
 ```
 
-y en la sección de `tabUbicacion` agrega **antes** de `this.tabUbicacion.Controls.Add(this.dgvUbicacion);`:
+**3. Agregar el panel a la pestaña y configurarlo.** En la sección de `tabUbicacion`, debajo de `this.tabUbicacion.Controls.Add(this.dgvUbicacion);`:
 
 ```csharp
             this.tabUbicacion.Controls.Add(this.pnlEstadoUnidad);
 ```
 
-**Paso 3b (si usas el Designer).** En `frmGestionActivos.cs` **borra** la llamada `CrearPanelEstadoUnidad();` del `Load`, **borra** el método `CrearPanelEstadoUnidad()` y las dos líneas `private ComboBox cmbEstadoUnidad; private Button btnCambiarEstadoUnidad;` (ya existen en el Designer), y en el `Load` agrega:
+y debajo de la configuración de `dgvUbicacion` (después de `this.dgvUbicacion.TabIndex = 0;`):
 
 ```csharp
-            btnCambiarEstadoUnidad.Enabled = EsAdministrador();
-            dgvUbicacion.BringToFront();
+            // 
+            // pnlEstadoUnidad  (cambio de estado de UNA unidad)
+            // 
+            this.pnlEstadoUnidad.Controls.Add(this.lblEstadoUnidad);
+            this.pnlEstadoUnidad.Controls.Add(this.cmbEstadoUnidad);
+            this.pnlEstadoUnidad.Controls.Add(this.btnCambiarEstadoUnidad);
+            this.pnlEstadoUnidad.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlEstadoUnidad.Location = new System.Drawing.Point(0, 85);
+            this.pnlEstadoUnidad.Name = "pnlEstadoUnidad";
+            this.pnlEstadoUnidad.Size = new System.Drawing.Size(1196, 34);
+            this.pnlEstadoUnidad.TabIndex = 1;
+            // 
+            // lblEstadoUnidad
+            // 
+            this.lblEstadoUnidad.AutoSize = true;
+            this.lblEstadoUnidad.ForeColor = System.Drawing.Color.White;
+            this.lblEstadoUnidad.Location = new System.Drawing.Point(8, 9);
+            this.lblEstadoUnidad.Name = "lblEstadoUnidad";
+            this.lblEstadoUnidad.Size = new System.Drawing.Size(235, 23);
+            this.lblEstadoUnidad.TabIndex = 0;
+            this.lblEstadoUnidad.Text = "Estado de la unidad seleccionada:";
+            // 
+            // cmbEstadoUnidad
+            // 
+            this.cmbEstadoUnidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEstadoUnidad.FormattingEnabled = true;
+            this.cmbEstadoUnidad.Location = new System.Drawing.Point(280, 4);
+            this.cmbEstadoUnidad.Name = "cmbEstadoUnidad";
+            this.cmbEstadoUnidad.Size = new System.Drawing.Size(220, 31);
+            this.cmbEstadoUnidad.TabIndex = 1;
+            // 
+            // btnCambiarEstadoUnidad
+            // 
+            this.btnCambiarEstadoUnidad.Location = new System.Drawing.Point(515, 3);
+            this.btnCambiarEstadoUnidad.Name = "btnCambiarEstadoUnidad";
+            this.btnCambiarEstadoUnidad.Size = new System.Drawing.Size(150, 28);
+            this.btnCambiarEstadoUnidad.TabIndex = 2;
+            this.btnCambiarEstadoUnidad.Text = "Cambiar estado";
+            this.btnCambiarEstadoUnidad.Click += new System.EventHandler(this.btnCambiarEstadoUnidad_Click);
 ```
 
-Sigue siendo opcional: la versión por código funciona sin tocar el Designer.
+Y antes de `this.tabUbicacion.ResumeLayout(false);` (al final de `InitializeComponent`):
+
+```csharp
+            this.pnlEstadoUnidad.ResumeLayout(false);
+            this.pnlEstadoUnidad.PerformLayout();
+```
+
+El panel queda **debajo** de la tabla (`Dock = Bottom`) y la tabla sigue ocupando el resto (`Dock = Fill`). El orden de los `Controls.Add` importa: primero la tabla y después el panel.
+
+**4. Ocultar el estado del formulario de alta/edición** (el estado ya no es del tipo de activo). Debajo de `this.lblEstado.Text = "Estado físico";` agrega `this.lblEstado.Visible = false;` y debajo de `this.cmbEstado.TabIndex = 3;` agrega `this.cmbEstado.Visible = false;`.
+
+Tras ocultarlos queda un hueco en el formulario de la izquierda; si quieres, sube `lblUbicacion`/`cmbUbicacion` y los botones unos 60 px desde el diseñador visual. No afecta el funcionamiento.
+
+Eso es **todo** el diseño: no hay cambios en ningún otro Designer.
 
 ---
 
@@ -436,22 +452,20 @@ Las unidades individuales se insertan/borran en `UnidadesActivo`. Si una unidad 
 
 ### 4. `frmGestionActivos.cs` — catálogo y ficha (el cambio más grande)
 
-Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista cada unidad con su estado, y se agrega el panel para cambiar el estado de UNA unidad (método `CrearPanelEstadoUnidad`, hecho por código).
+Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista cada unidad con su estado, y se agrega la lógica del botón *Cambiar estado* (`btnCambiarEstadoUnidad_Click`), cuyos controles ahora están en el Designer.
 
 **Archivo `frmGestionActivos.cs`** (líneas con `-` se quitan, líneas con `+` se agregan):
 
 ```diff
-@@ -43,6 +43,9 @@
-         private void frmGestionActivos_Load(object sender, EventArgs e)
+@@ -44,6 +44,7 @@
          {
              ConfigurarTooltips();
-+            // El estado ya no es del tipo de activo sino de cada unidad (se cambia en la ficha > Ubicación)
-+            lblEstado.Visible = false; cmbEstado.Visible = false;
-+            CrearPanelEstadoUnidad();
              CargarCatalogos();
++            btnCambiarEstadoUnidad.Enabled = EsAdministrador();   // solo el administrador cambia estados
              CargarActivos();
              LimpiarFormulario();
-@@ -179,6 +182,7 @@
+             InicializarPrestamos();
+@@ -179,6 +180,7 @@
                  LlenarCombo(cmbFiltroEstado, est, "IdEstado", "NombreEstado", "Todos los estados");
                  LlenarCombo(cmbDevEstado, est, "IdEstado", "NombreEstado", null);
                  LlenarCombo(cmbMantEstado, est, "IdEstado", "NombreEstado", null);
@@ -459,7 +473,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
  
                  DataTable sal = Datos.Tabla("SELECT IdSalon, NombreSalon FROM Salones ORDER BY NombreSalon");
                  LlenarCombo(cmbUbicacion, sal, "IdSalon", "NombreSalon", "(Sin ubicación)");
-@@ -217,8 +221,8 @@
+@@ -217,8 +219,8 @@
              try
              {
                  dtActivos = Datos.Tabla(
@@ -470,7 +484,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                        FROM vw_ActivosDetalle ORDER BY IdActivo");
  
                  ActualizarIndicadores();
-@@ -240,13 +244,13 @@
+@@ -240,13 +242,13 @@
          {
              if (dgvActivos.Columns.Count == 0) return;
              dgvActivos.Columns["IdCategoria"].Visible = false;
@@ -486,7 +500,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
              Encabezado(dgvActivos, "Ubicacion", "Ubicación", 18);
          }
  
-@@ -283,7 +287,13 @@
+@@ -283,7 +285,13 @@
              int idEst;
              if (cmbFiltroEstado.SelectedValue != null &&
                  int.TryParse(cmbFiltroEstado.SelectedValue.ToString(), out idEst) && idEst > 0)
@@ -501,7 +515,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
  
              vista.RowFilter = string.Join(" AND ", condiciones);
              int n = vista.Count;
-@@ -373,7 +383,6 @@
+@@ -373,7 +381,6 @@
              txtCodigo.Text = Convert.ToString(fila["CodigoInventario"]);
  
              if (fila["IdCategoria"] != DBNull.Value) cmbCategoria.SelectedValue = Convert.ToInt32(fila["IdCategoria"]);
@@ -509,7 +523,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
              cmbUbicacion.SelectedValue = fila["IdUbicacion"] == DBNull.Value ? 0 : Convert.ToInt32(fila["IdUbicacion"]);
  
              lblModo.Text = "Editando activo N° " + idSeleccionado;
-@@ -415,28 +424,42 @@
+@@ -415,28 +422,42 @@
              try
              {
                  DataTable ubic = Datos.Tabla(
@@ -562,7 +576,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                  Encabezado(dgvHistorial, "Usuario", "Usuario", 14);
  
                  Encabezado(dgvDanos, "FechaReporte", "Reportado", 12);
-@@ -450,8 +473,7 @@
+@@ -450,8 +471,7 @@
                  Encabezado(dgvDanos, "FechaReparacion", "Reparado", 12);
                  Encabezado(dgvDanos, "ObservacionReparacion", "Observación", 18);
  
@@ -572,7 +586,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                  int salones = ubic.AsEnumerable().Select(r => Convert.ToString(r["Salon"])).Distinct().Count();
                  int abiertos = danos.Select("Estado = 'Abierto'").Length;
  
-@@ -497,7 +519,6 @@
+@@ -497,7 +517,6 @@
              { errorProvider.SetError(txtCodigo, "Ese código de inventario ya está en uso."); ok = false; }
  
              if (cmbCategoria.SelectedValue == null) { errorProvider.SetError(cmbCategoria, "Seleccione una categoría."); ok = false; }
@@ -580,7 +594,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
              return ok;
          }
  
-@@ -517,12 +538,11 @@
+@@ -517,12 +536,11 @@
                      @"SET XACT_ABORT ON; BEGIN TRAN;
                        DECLARE @nuevoId INT = (SELECT ISNULL(MAX(IdActivo), 0) + 1
                                                FROM GestionActivos WITH (UPDLOCK, HOLDLOCK));
@@ -595,7 +609,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                      Datos.P("@categoria", Convert.ToInt32(cmbCategoria.SelectedValue)),
                      Datos.PTexto("@codigo", txtCodigo.Text),
                      Datos.P("@ubic", UbicacionSeleccionada()));
-@@ -553,11 +573,10 @@
+@@ -553,11 +571,10 @@
              {
                  Datos.Ejecutar(
                      @"UPDATE GestionActivos
@@ -608,7 +622,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                      Datos.P("@categoria", Convert.ToInt32(cmbCategoria.SelectedValue)),
                      Datos.PTexto("@codigo", txtCodigo.Text),
                      Datos.P("@ubic", UbicacionSeleccionada()),
-@@ -585,8 +604,7 @@
+@@ -585,8 +602,7 @@
              try
              {
                  int usos = Convert.ToInt32(Datos.Escalar(
@@ -618,7 +632,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                               (SELECT COUNT(*) FROM Prestamos WHERE IdActivo = @id) +
                               (SELECT COUNT(*) FROM MantenimientosActivo WHERE IdActivo = @id)",
                      Datos.P("@id", idSeleccionado)));
-@@ -594,8 +612,8 @@
+@@ -594,8 +610,8 @@
                  if (usos > 0)
                  {
                      MessageBox.Show(
@@ -629,31 +643,13 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                          "Operación cancelada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                      return;
                  }
-@@ -613,6 +631,65 @@
+@@ -613,6 +629,47 @@
              }
          }
  
 +        // ---------------------------------------------------------------
 +        //  ESTADO INDIVIDUAL: panel bajo la lista de unidades de la ficha
 +        // ---------------------------------------------------------------
-+        private ComboBox cmbEstadoUnidad;
-+        private Button btnCambiarEstadoUnidad;
-+
-+        private void CrearPanelEstadoUnidad()
-+        {
-+            Panel pnl = new Panel { Dock = DockStyle.Bottom, Height = 34, BackColor = Tarjeta };
-+            Label lbl = new Label { Text = "Estado de la unidad seleccionada:", AutoSize = true,
-+                                    ForeColor = Color.White, Location = new Point(8, 9) };
-+            cmbEstadoUnidad = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Width = 200, Location = new Point(250, 5) };
-+            btnCambiarEstadoUnidad = new Button { Text = "Cambiar estado", Width = 130, Height = 26, Location = new Point(460, 4),
-+                                                  FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(0, 120, 212), ForeColor = Color.White };
-+            btnCambiarEstadoUnidad.Click += btnCambiarEstadoUnidad_Click;
-+            pnl.Controls.Add(lbl); pnl.Controls.Add(cmbEstadoUnidad); pnl.Controls.Add(btnCambiarEstadoUnidad);
-+            tabUbicacion.Controls.Add(pnl);
-+            dgvUbicacion.BringToFront();   // la tabla ocupa el resto del espacio
-+            btnCambiarEstadoUnidad.Enabled = EsAdministrador();
-+        }
-+
 +        private void LlenarComboEstadoUnidad()
 +        {
 +            if (cmbEstadoUnidad == null || cmbEstadoUnidad.Items.Count > 0) return;
@@ -695,7 +691,7 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
          private void btnExportarPdf_Click(object sender, EventArgs e)
          {
              try
-@@ -622,11 +699,12 @@
+@@ -622,11 +679,12 @@
                      MessageBox.Show("No hay datos para exportar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                      return;
                  }
@@ -711,7 +707,6 @@ Quita el estado del tipo de activo, muestra totales de unidades, la ficha lista 
                  ExportadorPdf.Exportar("Catálogo de activos", dt);
              }
 ```
-
 
 ### 5. `frmGestionActivosPrestamos.cs`
 

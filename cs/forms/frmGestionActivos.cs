@@ -43,10 +43,8 @@ namespace Vistass
         private void frmGestionActivos_Load(object sender, EventArgs e)
         {
             ConfigurarTooltips();
-            // El estado ya no es del tipo de activo sino de cada unidad (se cambia en la ficha > Ubicación)
-            lblEstado.Visible = false; cmbEstado.Visible = false;
-            CrearPanelEstadoUnidad();
             CargarCatalogos();
+            btnCambiarEstadoUnidad.Enabled = EsAdministrador();   // solo el administrador cambia estados
             CargarActivos();
             LimpiarFormulario();
             InicializarPrestamos();
@@ -634,24 +632,6 @@ namespace Vistass
         // ---------------------------------------------------------------
         //  ESTADO INDIVIDUAL: panel bajo la lista de unidades de la ficha
         // ---------------------------------------------------------------
-        private ComboBox cmbEstadoUnidad;
-        private Button btnCambiarEstadoUnidad;
-
-        private void CrearPanelEstadoUnidad()
-        {
-            Panel pnl = new Panel { Dock = DockStyle.Bottom, Height = 34, BackColor = Tarjeta };
-            Label lbl = new Label { Text = "Estado de la unidad seleccionada:", AutoSize = true,
-                                    ForeColor = Color.White, Location = new Point(8, 9) };
-            cmbEstadoUnidad = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Width = 200, Location = new Point(250, 5) };
-            btnCambiarEstadoUnidad = new Button { Text = "Cambiar estado", Width = 130, Height = 26, Location = new Point(460, 4),
-                                                  FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(0, 120, 212), ForeColor = Color.White };
-            btnCambiarEstadoUnidad.Click += btnCambiarEstadoUnidad_Click;
-            pnl.Controls.Add(lbl); pnl.Controls.Add(cmbEstadoUnidad); pnl.Controls.Add(btnCambiarEstadoUnidad);
-            tabUbicacion.Controls.Add(pnl);
-            dgvUbicacion.BringToFront();   // la tabla ocupa el resto del espacio
-            btnCambiarEstadoUnidad.Enabled = EsAdministrador();
-        }
-
         private void LlenarComboEstadoUnidad()
         {
             if (cmbEstadoUnidad == null || cmbEstadoUnidad.Items.Count > 0) return;
