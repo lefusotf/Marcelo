@@ -263,7 +263,7 @@ GROUP BY cat.NombreCategoria;
 GO
 
 CREATE OR ALTER VIEW dbo.vw_AuditoriaUnidadesDetalle AS
-SELECT a.IdAuditoria, a.Fecha, a.Accion, a.IdUnidad, a.CodigoInventario,
+SELECT a.IdAuditoria, a.Fecha, a.Accion, a.IdUnidad, a.IdActivo, a.CodigoInventario,
        g.Nombre AS Activo,
        ea.NombreEstado AS EstadoAnterior, en.NombreEstado AS EstadoNuevo,
        sa.NombreSalon  AS SalonAnterior,  sn.NombreSalon  AS SalonNuevo,
