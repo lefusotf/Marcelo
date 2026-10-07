@@ -441,11 +441,18 @@ SELECT e.IdEmpleado, e.Nombre, e.FechaContratacion,
        e.IdCargo,  c.NombreCargo,
        e.IdEstado, ee.NombreEstado AS Estado,
        e.IdPlanilla,
-       p.SalarioBase, p.Descuento, p.Bono, p.SalarioNeto
+       p.SalarioBase, p.Descuento, p.Bono, p.SalarioNeto,
+       -- Estado del pago del mes actual (el programa lo muestra en Personal)
+       ISNULL(pg.EstadoPago, 'Sin registrar') AS EstadoPago
 FROM dbo.Empleados e
 LEFT JOIN dbo.Cargos c           ON c.IdCargo    = e.IdCargo
 LEFT JOIN dbo.EstadosEmpleado ee ON ee.IdEstado  = e.IdEstado
-LEFT JOIN dbo.Planillas p        ON p.IdPlanilla = e.IdPlanilla;
+LEFT JOIN dbo.Planillas p        ON p.IdPlanilla = e.IdPlanilla
+OUTER APPLY (SELECT TOP 1 x.EstadoPago
+             FROM dbo.PagosPlanilla x
+             WHERE x.IdEmpleado = e.IdEmpleado AND x.Anulado = 0
+               AND x.Periodo = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
+             ORDER BY x.IdPago DESC) pg;
 GO
 
 CREATE OR ALTER VIEW dbo.vw_ResumenEmpleadosPorEstado AS
