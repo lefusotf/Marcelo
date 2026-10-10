@@ -1026,9 +1026,9 @@ namespace Vistass
             this.txtMantDesc.MaxLength = 500;
             this.txtMantDesc.Multiline = true;
             this.txtMantDesc.Name = "txtMantDesc";
-            this.txtMantDesc.Size = new Size(340, 64);
+            this.txtMantDesc.Size = new Size(340, 60);
 
-            this.lblMantVinculo.Location = new Point(20, 392);
+            this.lblMantVinculo.Location = new Point(20, 382);
             this.lblMantVinculo.Name = "lblMantVinculo";
             this.lblMantVinculo.Size = new Size(340, 34);
             this.lblMantVinculo.Text = "Sin reporte de daño vinculado (seleccione uno de la tabla para cerrarlo al guardar)";
