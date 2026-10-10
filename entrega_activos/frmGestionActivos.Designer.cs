@@ -25,6 +25,7 @@ namespace Vistass
             this.btnActualizar = new Vistass.BotonTema();
             this.btnEliminar = new Vistass.BotonTema();
             this.btnLimpiar = new Vistass.BotonTema();
+            this.pnlAccionesCat = new Panel();
             this.lblModo = new Label();
             this.lblCodigo = new Label();
             this.txtCodigo = new TextBox();
@@ -76,6 +77,7 @@ namespace Vistass
             this.lblPrestObs = new Label();
             this.txtPrestObs = new TextBox();
             this.btnPrestar = new Vistass.BotonTema();
+            this.pnlAccionesPrest = new Panel();
             this.pnlPrestForm = new Panel();
             this.dgvPrestamos = new Vistass.GridOscuro();
             this.lblDevSel = new Label();
@@ -112,6 +114,7 @@ namespace Vistass
             this.lblMovDestino = new Label();
             this.txtMovDestino = new ComboBox();
             this.btnMovimiento = new Vistass.BotonTema();
+            this.pnlAccionesCons = new Panel();
             this.pnlConsForm = new Panel();
             this.dgvStock = new Vistass.GridOscuro();
             this.lblStockTitulo = new Label();
@@ -140,6 +143,7 @@ namespace Vistass
             this.lblMantVinculo = new Label();
             this.btnMantRegistrar = new Vistass.BotonTema();
             this.btnMantLimpiar = new Vistass.BotonTema();
+            this.pnlAccionesMant = new Panel();
             this.pnlMantForm = new Panel();
             this.dgvMantenimientos = new Vistass.GridOscuro();
             this.lblMantHistTitulo = new Label();
@@ -183,35 +187,39 @@ namespace Vistass
             this.toolTip1 = new ToolTip(this.components);
             this.SuspendLayout();
 
-            this.btnGuardar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnGuardar.Location = new Point(20, 424);
+            this.btnGuardar.Location = new Point(20, 0);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new Size(340, 40);
             this.btnGuardar.Text = "Agregar activo";
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
 
-            this.btnActualizar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left)));
-            this.btnActualizar.Location = new Point(20, 474);
+            this.btnActualizar.Location = new Point(20, 50);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new Size(165, 40);
             this.btnActualizar.Text = "Guardar cambios";
             this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
 
-            this.btnEliminar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left)));
-            this.btnEliminar.Location = new Point(195, 474);
+            this.btnEliminar.Location = new Point(195, 50);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new Size(165, 40);
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.Tipo = Vistass.TipoBoton.Peligro;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
 
-            this.btnLimpiar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnLimpiar.Location = new Point(20, 524);
+            this.btnLimpiar.Location = new Point(20, 100);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new Size(340, 40);
             this.btnLimpiar.Text = "Nuevo / limpiar formulario";
             this.btnLimpiar.Tipo = Vistass.TipoBoton.Secundario;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+
+            this.pnlAccionesCat.Controls.Add(this.btnGuardar);
+            this.pnlAccionesCat.Controls.Add(this.btnActualizar);
+            this.pnlAccionesCat.Controls.Add(this.btnEliminar);
+            this.pnlAccionesCat.Controls.Add(this.btnLimpiar);
+            this.pnlAccionesCat.Name = "pnlAccionesCat";
+            this.pnlAccionesCat.Dock = DockStyle.Bottom;
+            this.pnlAccionesCat.Size = new Size(380, 156);
 
             this.lblModo.AutoSize = true;
             this.lblModo.Location = new Point(20, 16);
@@ -297,10 +305,7 @@ namespace Vistass
             this.pnlFormulario.Controls.Add(this.cmbEstado);
             this.pnlFormulario.Controls.Add(this.lblUbicacion);
             this.pnlFormulario.Controls.Add(this.cmbUbicacion);
-            this.pnlFormulario.Controls.Add(this.btnGuardar);
-            this.pnlFormulario.Controls.Add(this.btnActualizar);
-            this.pnlFormulario.Controls.Add(this.btnEliminar);
-            this.pnlFormulario.Controls.Add(this.btnLimpiar);
+            this.pnlFormulario.Controls.Add(this.pnlAccionesCat);
             this.pnlFormulario.Name = "pnlFormulario";
             this.pnlFormulario.BackColor = Color.FromArgb(21, 23, 31);
             this.pnlFormulario.Dock = DockStyle.Left;
@@ -455,39 +460,39 @@ namespace Vistass
             this.tabCatalogo.UseVisualStyleBackColor = false;
 
             this.lblPrestTitulo.AutoSize = true;
-            this.lblPrestTitulo.Location = new Point(20, 16);
+            this.lblPrestTitulo.Location = new Point(20, 12);
             this.lblPrestTitulo.Name = "lblPrestTitulo";
             this.lblPrestTitulo.Text = "Registrar salida de equipo";
             this.lblPrestTitulo.Font = new Font("Segoe UI Semibold", 11.5F, FontStyle.Bold);
             this.lblPrestTitulo.ForeColor = Color.FromArgb(250, 204, 21);
 
             this.lblPrestActivo.AutoSize = true;
-            this.lblPrestActivo.Location = new Point(20, 54);
+            this.lblPrestActivo.Location = new Point(20, 42);
             this.lblPrestActivo.Name = "lblPrestActivo";
             this.lblPrestActivo.Text = "Equipo a prestar";
 
             this.cmbPrestActivo.BackColor = Color.FromArgb(38, 42, 58);
             this.cmbPrestActivo.FlatStyle = FlatStyle.Flat;
             this.cmbPrestActivo.ForeColor = Color.FromArgb(226, 232, 244);
-            this.cmbPrestActivo.Location = new Point(20, 76);
+            this.cmbPrestActivo.Location = new Point(20, 62);
             this.cmbPrestActivo.Name = "cmbPrestActivo";
             this.cmbPrestActivo.Size = new Size(340, 27);
 
             this.lblPrestCodigo.AutoSize = true;
-            this.lblPrestCodigo.Location = new Point(20, 116);
+            this.lblPrestCodigo.Location = new Point(20, 94);
             this.lblPrestCodigo.Name = "lblPrestCodigo";
             this.lblPrestCodigo.Text = "Código del equipo (opcional)";
 
             this.txtPrestCodigo.BackColor = Color.FromArgb(38, 42, 58);
             this.txtPrestCodigo.BorderStyle = BorderStyle.FixedSingle;
             this.txtPrestCodigo.ForeColor = Color.FromArgb(226, 232, 244);
-            this.txtPrestCodigo.Location = new Point(20, 138);
+            this.txtPrestCodigo.Location = new Point(20, 114);
             this.txtPrestCodigo.MaxLength = 50;
             this.txtPrestCodigo.Name = "txtPrestCodigo";
             this.txtPrestCodigo.Size = new Size(340, 27);
 
             this.lblPrestCant.AutoSize = true;
-            this.lblPrestCant.Location = new Point(250, 116);
+            this.lblPrestCant.Location = new Point(250, 94);
             this.lblPrestCant.Name = "lblPrestCant";
             this.lblPrestCant.Text = "Cantidad";
             this.lblPrestCant.Visible = false;
@@ -495,7 +500,7 @@ namespace Vistass
             this.numPrestCant.BackColor = Color.FromArgb(38, 42, 58);
             this.numPrestCant.BorderStyle = BorderStyle.FixedSingle;
             this.numPrestCant.ForeColor = Color.FromArgb(226, 232, 244);
-            this.numPrestCant.Location = new Point(250, 138);
+            this.numPrestCant.Location = new Point(250, 114);
             this.numPrestCant.Maximum = new decimal(1000);
             this.numPrestCant.Minimum = new decimal(1);
             this.numPrestCant.Name = "numPrestCant";
@@ -504,72 +509,76 @@ namespace Vistass
             this.numPrestCant.Visible = false;
 
             this.lblPrestTipo.AutoSize = true;
-            this.lblPrestTipo.Location = new Point(20, 178);
+            this.lblPrestTipo.Location = new Point(20, 146);
             this.lblPrestTipo.Name = "lblPrestTipo";
             this.lblPrestTipo.Text = "Tipo de responsable";
 
             this.cmbPrestTipo.BackColor = Color.FromArgb(38, 42, 58);
             this.cmbPrestTipo.FlatStyle = FlatStyle.Flat;
             this.cmbPrestTipo.ForeColor = Color.FromArgb(226, 232, 244);
-            this.cmbPrestTipo.Location = new Point(20, 200);
+            this.cmbPrestTipo.Location = new Point(20, 166);
             this.cmbPrestTipo.Name = "cmbPrestTipo";
             this.cmbPrestTipo.Size = new Size(340, 27);
 
             this.lblPrestResp.AutoSize = true;
-            this.lblPrestResp.Location = new Point(20, 240);
+            this.lblPrestResp.Location = new Point(20, 198);
             this.lblPrestResp.Name = "lblPrestResp";
             this.lblPrestResp.Text = "Nombre del responsable";
 
             this.txtPrestResp.BackColor = Color.FromArgb(38, 42, 58);
             this.txtPrestResp.BorderStyle = BorderStyle.FixedSingle;
             this.txtPrestResp.ForeColor = Color.FromArgb(226, 232, 244);
-            this.txtPrestResp.Location = new Point(20, 262);
+            this.txtPrestResp.Location = new Point(20, 218);
             this.txtPrestResp.MaxLength = 100;
             this.txtPrestResp.Name = "txtPrestResp";
             this.txtPrestResp.Size = new Size(340, 27);
 
             this.lblPrestAula.AutoSize = true;
-            this.lblPrestAula.Location = new Point(20, 302);
+            this.lblPrestAula.Location = new Point(20, 250);
             this.lblPrestAula.Name = "lblPrestAula";
             this.lblPrestAula.Text = "Aula de destino";
 
             this.cmbPrestAula.BackColor = Color.FromArgb(38, 42, 58);
             this.cmbPrestAula.FlatStyle = FlatStyle.Flat;
             this.cmbPrestAula.ForeColor = Color.FromArgb(226, 232, 244);
-            this.cmbPrestAula.Location = new Point(20, 324);
+            this.cmbPrestAula.Location = new Point(20, 270);
             this.cmbPrestAula.Name = "cmbPrestAula";
             this.cmbPrestAula.Size = new Size(340, 27);
 
             this.lblPrestLimite.AutoSize = true;
-            this.lblPrestLimite.Location = new Point(20, 364);
+            this.lblPrestLimite.Location = new Point(20, 302);
             this.lblPrestLimite.Name = "lblPrestLimite";
             this.lblPrestLimite.Text = "Fecha y hora límite de devolución";
 
             this.dtpPrestLimite.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtpPrestLimite.Format = DateTimePickerFormat.Custom;
-            this.dtpPrestLimite.Location = new Point(20, 386);
+            this.dtpPrestLimite.Location = new Point(20, 322);
             this.dtpPrestLimite.Name = "dtpPrestLimite";
             this.dtpPrestLimite.Size = new Size(340, 27);
 
             this.lblPrestObs.AutoSize = true;
-            this.lblPrestObs.Location = new Point(20, 426);
+            this.lblPrestObs.Location = new Point(20, 354);
             this.lblPrestObs.Name = "lblPrestObs";
             this.lblPrestObs.Text = "Observaciones";
 
             this.txtPrestObs.BackColor = Color.FromArgb(38, 42, 58);
             this.txtPrestObs.BorderStyle = BorderStyle.FixedSingle;
             this.txtPrestObs.ForeColor = Color.FromArgb(226, 232, 244);
-            this.txtPrestObs.Location = new Point(20, 448);
+            this.txtPrestObs.Location = new Point(20, 374);
             this.txtPrestObs.MaxLength = 300;
             this.txtPrestObs.Name = "txtPrestObs";
             this.txtPrestObs.Size = new Size(340, 27);
 
-            this.btnPrestar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnPrestar.Location = new Point(20, 524);
+            this.btnPrestar.Location = new Point(20, 0);
             this.btnPrestar.Name = "btnPrestar";
             this.btnPrestar.Size = new Size(340, 40);
             this.btnPrestar.Text = "Registrar salida";
             this.btnPrestar.Click += new System.EventHandler(this.btnPrestar_Click);
+
+            this.pnlAccionesPrest.Controls.Add(this.btnPrestar);
+            this.pnlAccionesPrest.Name = "pnlAccionesPrest";
+            this.pnlAccionesPrest.Dock = DockStyle.Bottom;
+            this.pnlAccionesPrest.Size = new Size(380, 56);
 
             this.pnlPrestForm.Controls.Add(this.lblPrestTitulo);
             this.pnlPrestForm.Controls.Add(this.lblPrestActivo);
@@ -588,7 +597,7 @@ namespace Vistass
             this.pnlPrestForm.Controls.Add(this.dtpPrestLimite);
             this.pnlPrestForm.Controls.Add(this.lblPrestObs);
             this.pnlPrestForm.Controls.Add(this.txtPrestObs);
-            this.pnlPrestForm.Controls.Add(this.btnPrestar);
+            this.pnlPrestForm.Controls.Add(this.pnlAccionesPrest);
             this.pnlPrestForm.Name = "pnlPrestForm";
             this.pnlPrestForm.BackColor = Color.FromArgb(21, 23, 31);
             this.pnlPrestForm.Dock = DockStyle.Left;
@@ -704,99 +713,98 @@ namespace Vistass
             this.tabPrestamos.UseVisualStyleBackColor = false;
 
             this.lblConsNuevo.AutoSize = true;
-            this.lblConsNuevo.Location = new Point(20, 16);
+            this.lblConsNuevo.Location = new Point(20, 12);
             this.lblConsNuevo.Name = "lblConsNuevo";
             this.lblConsNuevo.Text = "Nuevo consumible";
             this.lblConsNuevo.Font = new Font("Segoe UI Semibold", 11.5F, FontStyle.Bold);
             this.lblConsNuevo.ForeColor = Color.FromArgb(250, 204, 21);
 
             this.lblConsNombre.AutoSize = true;
-            this.lblConsNombre.Location = new Point(20, 48);
+            this.lblConsNombre.Location = new Point(20, 42);
             this.lblConsNombre.Name = "lblConsNombre";
             this.lblConsNombre.Text = "Nombre (ej. Resma de papel carta)";
 
             this.txtConsNombre.BackColor = Color.FromArgb(38, 42, 58);
             this.txtConsNombre.BorderStyle = BorderStyle.FixedSingle;
             this.txtConsNombre.ForeColor = Color.FromArgb(226, 232, 244);
-            this.txtConsNombre.Location = new Point(20, 70);
+            this.txtConsNombre.Location = new Point(20, 62);
             this.txtConsNombre.MaxLength = 100;
             this.txtConsNombre.Name = "txtConsNombre";
             this.txtConsNombre.Size = new Size(340, 27);
 
             this.lblConsUnidad.AutoSize = true;
-            this.lblConsUnidad.Location = new Point(20, 110);
+            this.lblConsUnidad.Location = new Point(20, 98);
             this.lblConsUnidad.Name = "lblConsUnidad";
             this.lblConsUnidad.Text = "Unidad de medida";
 
             this.txtConsUnidad.BackColor = Color.FromArgb(38, 42, 58);
             this.txtConsUnidad.BorderStyle = BorderStyle.FixedSingle;
             this.txtConsUnidad.ForeColor = Color.FromArgb(226, 232, 244);
-            this.txtConsUnidad.Location = new Point(20, 132);
+            this.txtConsUnidad.Location = new Point(20, 118);
             this.txtConsUnidad.MaxLength = 30;
             this.txtConsUnidad.Name = "txtConsUnidad";
             this.txtConsUnidad.Size = new Size(160, 27);
 
             this.lblConsMin.AutoSize = true;
-            this.lblConsMin.Location = new Point(196, 110);
+            this.lblConsMin.Location = new Point(196, 98);
             this.lblConsMin.Name = "lblConsMin";
             this.lblConsMin.Text = "Stock mínimo";
 
             this.numConsMin.BackColor = Color.FromArgb(38, 42, 58);
             this.numConsMin.BorderStyle = BorderStyle.FixedSingle;
             this.numConsMin.ForeColor = Color.FromArgb(226, 232, 244);
-            this.numConsMin.Location = new Point(196, 132);
+            this.numConsMin.Location = new Point(196, 118);
             this.numConsMin.Maximum = new decimal(100000);
             this.numConsMin.Name = "numConsMin";
             this.numConsMin.Size = new Size(164, 27);
 
-            this.btnConsCrear.Anchor = ((AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnConsCrear.Location = new Point(20, 176);
+            this.btnConsCrear.Location = new Point(20, 152);
             this.btnConsCrear.Name = "btnConsCrear";
             this.btnConsCrear.Size = new Size(340, 40);
             this.btnConsCrear.Text = "Crear consumible";
             this.btnConsCrear.Click += new System.EventHandler(this.btnConsCrear_Click);
 
             this.lblMovTitulo.AutoSize = true;
-            this.lblMovTitulo.Location = new Point(20, 236);
+            this.lblMovTitulo.Location = new Point(20, 206);
             this.lblMovTitulo.Name = "lblMovTitulo";
             this.lblMovTitulo.Text = "Registrar movimiento";
             this.lblMovTitulo.Font = new Font("Segoe UI Semibold", 11.5F, FontStyle.Bold);
             this.lblMovTitulo.ForeColor = Color.FromArgb(250, 204, 21);
 
             this.lblMovCons.AutoSize = true;
-            this.lblMovCons.Location = new Point(20, 270);
+            this.lblMovCons.Location = new Point(20, 238);
             this.lblMovCons.Name = "lblMovCons";
             this.lblMovCons.Text = "Consumible";
 
             this.cmbMovCons.BackColor = Color.FromArgb(38, 42, 58);
             this.cmbMovCons.FlatStyle = FlatStyle.Flat;
             this.cmbMovCons.ForeColor = Color.FromArgb(226, 232, 244);
-            this.cmbMovCons.Location = new Point(20, 292);
+            this.cmbMovCons.Location = new Point(20, 258);
             this.cmbMovCons.Name = "cmbMovCons";
             this.cmbMovCons.Size = new Size(340, 27);
 
             this.lblMovTipo.AutoSize = true;
-            this.lblMovTipo.Location = new Point(20, 332);
+            this.lblMovTipo.Location = new Point(20, 296);
             this.lblMovTipo.Name = "lblMovTipo";
             this.lblMovTipo.Text = "Tipo";
 
             this.cmbMovTipo.BackColor = Color.FromArgb(38, 42, 58);
             this.cmbMovTipo.FlatStyle = FlatStyle.Flat;
             this.cmbMovTipo.ForeColor = Color.FromArgb(226, 232, 244);
-            this.cmbMovTipo.Location = new Point(20, 354);
+            this.cmbMovTipo.Location = new Point(20, 316);
             this.cmbMovTipo.Name = "cmbMovTipo";
             this.cmbMovTipo.Size = new Size(160, 27);
             this.cmbMovTipo.SelectedIndexChanged += new System.EventHandler(this.cmbMovTipo_SelectedIndexChanged);
 
             this.lblMovCant.AutoSize = true;
-            this.lblMovCant.Location = new Point(196, 332);
+            this.lblMovCant.Location = new Point(196, 296);
             this.lblMovCant.Name = "lblMovCant";
             this.lblMovCant.Text = "Cantidad";
 
             this.numMovCant.BackColor = Color.FromArgb(38, 42, 58);
             this.numMovCant.BorderStyle = BorderStyle.FixedSingle;
             this.numMovCant.ForeColor = Color.FromArgb(226, 232, 244);
-            this.numMovCant.Location = new Point(196, 354);
+            this.numMovCant.Location = new Point(196, 316);
             this.numMovCant.Maximum = new decimal(100000);
             this.numMovCant.Minimum = new decimal(1);
             this.numMovCant.Name = "numMovCant";
@@ -804,36 +812,40 @@ namespace Vistass
             this.numMovCant.Value = new decimal(1);
 
             this.lblMovMotivo.AutoSize = true;
-            this.lblMovMotivo.Location = new Point(20, 394);
+            this.lblMovMotivo.Location = new Point(20, 354);
             this.lblMovMotivo.Name = "lblMovMotivo";
             this.lblMovMotivo.Text = "Motivo";
 
             this.cmbMovMotivo.BackColor = Color.FromArgb(38, 42, 58);
             this.cmbMovMotivo.FlatStyle = FlatStyle.Flat;
             this.cmbMovMotivo.ForeColor = Color.FromArgb(226, 232, 244);
-            this.cmbMovMotivo.Location = new Point(20, 416);
+            this.cmbMovMotivo.Location = new Point(20, 374);
             this.cmbMovMotivo.Name = "cmbMovMotivo";
             this.cmbMovMotivo.Size = new Size(340, 27);
 
             this.lblMovDestino.AutoSize = true;
-            this.lblMovDestino.Location = new Point(20, 456);
+            this.lblMovDestino.Location = new Point(20, 412);
             this.lblMovDestino.Name = "lblMovDestino";
             this.lblMovDestino.Text = "Destino o referencia (aula, factura…)";
 
             this.txtMovDestino.BackColor = Color.FromArgb(38, 42, 58);
             this.txtMovDestino.FlatStyle = FlatStyle.Flat;
             this.txtMovDestino.ForeColor = Color.FromArgb(226, 232, 244);
-            this.txtMovDestino.Location = new Point(20, 478);
+            this.txtMovDestino.Location = new Point(20, 432);
             this.txtMovDestino.MaxLength = 100;
             this.txtMovDestino.Name = "txtMovDestino";
             this.txtMovDestino.Size = new Size(340, 27);
 
-            this.btnMovimiento.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnMovimiento.Location = new Point(20, 524);
+            this.btnMovimiento.Location = new Point(20, 0);
             this.btnMovimiento.Name = "btnMovimiento";
             this.btnMovimiento.Size = new Size(340, 40);
             this.btnMovimiento.Text = "Registrar movimiento";
             this.btnMovimiento.Click += new System.EventHandler(this.btnMovimiento_Click);
+
+            this.pnlAccionesCons.Controls.Add(this.btnMovimiento);
+            this.pnlAccionesCons.Name = "pnlAccionesCons";
+            this.pnlAccionesCons.Dock = DockStyle.Bottom;
+            this.pnlAccionesCons.Size = new Size(380, 56);
 
             this.pnlConsForm.Controls.Add(this.lblConsNuevo);
             this.pnlConsForm.Controls.Add(this.lblConsNombre);
@@ -854,7 +866,7 @@ namespace Vistass
             this.pnlConsForm.Controls.Add(this.cmbMovMotivo);
             this.pnlConsForm.Controls.Add(this.lblMovDestino);
             this.pnlConsForm.Controls.Add(this.txtMovDestino);
-            this.pnlConsForm.Controls.Add(this.btnMovimiento);
+            this.pnlConsForm.Controls.Add(this.pnlAccionesCons);
             this.pnlConsForm.Name = "pnlConsForm";
             this.pnlConsForm.BackColor = Color.FromArgb(21, 23, 31);
             this.pnlConsForm.Dock = DockStyle.Left;
@@ -1023,20 +1035,24 @@ namespace Vistass
             this.lblMantVinculo.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
             this.lblMantVinculo.ForeColor = Color.FromArgb(150, 160, 182);
 
-            this.btnMantRegistrar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnMantRegistrar.Location = new Point(20, 474);
+            this.btnMantRegistrar.Location = new Point(20, 0);
             this.btnMantRegistrar.Name = "btnMantRegistrar";
             this.btnMantRegistrar.Size = new Size(340, 40);
             this.btnMantRegistrar.Text = "Registrar mantenimiento";
             this.btnMantRegistrar.Click += new System.EventHandler(this.btnMantRegistrar_Click);
 
-            this.btnMantLimpiar.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right)));
-            this.btnMantLimpiar.Location = new Point(20, 524);
+            this.btnMantLimpiar.Location = new Point(20, 50);
             this.btnMantLimpiar.Name = "btnMantLimpiar";
             this.btnMantLimpiar.Size = new Size(340, 40);
             this.btnMantLimpiar.Text = "Limpiar";
             this.btnMantLimpiar.Tipo = Vistass.TipoBoton.Secundario;
             this.btnMantLimpiar.Click += new System.EventHandler(this.btnMantLimpiar_Click);
+
+            this.pnlAccionesMant.Controls.Add(this.btnMantRegistrar);
+            this.pnlAccionesMant.Controls.Add(this.btnMantLimpiar);
+            this.pnlAccionesMant.Name = "pnlAccionesMant";
+            this.pnlAccionesMant.Dock = DockStyle.Bottom;
+            this.pnlAccionesMant.Size = new Size(380, 106);
 
             this.pnlMantForm.Controls.Add(this.lblMantTitulo);
             this.pnlMantForm.Controls.Add(this.lblMantActivo);
@@ -1054,8 +1070,7 @@ namespace Vistass
             this.pnlMantForm.Controls.Add(this.lblMantDesc);
             this.pnlMantForm.Controls.Add(this.txtMantDesc);
             this.pnlMantForm.Controls.Add(this.lblMantVinculo);
-            this.pnlMantForm.Controls.Add(this.btnMantRegistrar);
-            this.pnlMantForm.Controls.Add(this.btnMantLimpiar);
+            this.pnlMantForm.Controls.Add(this.pnlAccionesMant);
             this.pnlMantForm.Name = "pnlMantForm";
             this.pnlMantForm.BackColor = Color.FromArgb(21, 23, 31);
             this.pnlMantForm.Dock = DockStyle.Left;
@@ -1378,6 +1393,7 @@ namespace Vistass
         private Vistass.BotonTema btnActualizar;
         private Vistass.BotonTema btnEliminar;
         private Vistass.BotonTema btnLimpiar;
+        private Panel pnlAccionesCat;
         private Label lblModo;
         private Label lblCodigo;
         private TextBox txtCodigo;
@@ -1429,6 +1445,7 @@ namespace Vistass
         private Label lblPrestObs;
         private TextBox txtPrestObs;
         private Vistass.BotonTema btnPrestar;
+        private Panel pnlAccionesPrest;
         private Panel pnlPrestForm;
         private Vistass.GridOscuro dgvPrestamos;
         private Label lblDevSel;
@@ -1465,6 +1482,7 @@ namespace Vistass
         private Label lblMovDestino;
         private ComboBox txtMovDestino;
         private Vistass.BotonTema btnMovimiento;
+        private Panel pnlAccionesCons;
         private Panel pnlConsForm;
         private Vistass.GridOscuro dgvStock;
         private Label lblStockTitulo;
@@ -1493,6 +1511,7 @@ namespace Vistass
         private Label lblMantVinculo;
         private Vistass.BotonTema btnMantRegistrar;
         private Vistass.BotonTema btnMantLimpiar;
+        private Panel pnlAccionesMant;
         private Panel pnlMantForm;
         private Vistass.GridOscuro dgvMantenimientos;
         private Label lblMantHistTitulo;
