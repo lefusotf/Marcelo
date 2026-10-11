@@ -369,21 +369,21 @@ namespace Vistass
 
             this.btnExportarPdf.Margin = new Padding(0, 0, 8, 0);
             this.btnExportarPdf.Name = "btnExportarPdf";
-            this.btnExportarPdf.Size = new Size(70, 32);
+            this.btnExportarPdf.Size = new Size(56, 32);
             this.btnExportarPdf.Text = "PDF";
             this.btnExportarPdf.Tipo = Vistass.TipoBoton.Secundario;
             this.btnExportarPdf.Click += new System.EventHandler(this.btnExportarPdf_Click);
 
             this.btnHistorial.Margin = new Padding(0, 0, 8, 0);
             this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new Size(88, 32);
+            this.btnHistorial.Size = new Size(80, 32);
             this.btnHistorial.Text = "Historial";
             this.btnHistorial.Tipo = Vistass.TipoBoton.Secundario;
             this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
 
             this.btnVerUnidades.Margin = new Padding(0, 0, 8, 0);
             this.btnVerUnidades.Name = "btnVerUnidades";
-            this.btnVerUnidades.Size = new Size(88, 32);
+            this.btnVerUnidades.Size = new Size(80, 32);
             this.btnVerUnidades.Text = "Unidades";
             this.btnVerUnidades.Tipo = Vistass.TipoBoton.Secundario;
             this.btnVerUnidades.Click += new System.EventHandler(this.btnVerUnidades_Click);
@@ -428,6 +428,7 @@ namespace Vistass
             this.pnlBuscador.Size = new Size(220, 32);
             this.pnlBuscador.Paint += new PaintEventHandler(this.pnlBuscador_Paint);
 
+            this.flpAccionesBusq.Anchor = AnchorStyles.None;
             this.flpAccionesBusq.AutoSize = true;
             this.flpAccionesBusq.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.flpAccionesBusq.BackColor = Color.Transparent;
@@ -442,8 +443,8 @@ namespace Vistass
             this.tlpBusqueda.BackColor = Color.Transparent;
             this.tlpBusqueda.ColumnCount = 4;
             this.tlpBusqueda.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            this.tlpBusqueda.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 158F));
-            this.tlpBusqueda.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 138F));
+            this.tlpBusqueda.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 185F));
+            this.tlpBusqueda.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 155F));
             this.tlpBusqueda.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             this.tlpBusqueda.RowCount = 1;
             this.tlpBusqueda.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));

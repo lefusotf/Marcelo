@@ -155,13 +155,13 @@ namespace Vistass
             if (dgvActivos.Columns.Count == 0) return;
             dgvActivos.Columns["IdCategoria"].Visible = false;
             dgvActivos.Columns["IdUbicacion"].Visible = false;
-            Encabezado(dgvActivos, "IdActivo", "N°", 6);
-            Encabezado(dgvActivos, "CodigoInventario", "Código", 14);
-            Encabezado(dgvActivos, "Nombre", "Nombre del activo", 28);
-            Encabezado(dgvActivos, "Categoria", "Categoría", 18);
-            Encabezado(dgvActivos, "TotalUnidades", "Unidades", 9);
-            Encabezado(dgvActivos, "UnidadesConProblema", "Con problema", 10);
-            Encabezado(dgvActivos, "Ubicacion", "Ubicación", 18);
+            Encabezado(dgvActivos, "IdActivo", "N°", 4);
+            Encabezado(dgvActivos, "CodigoInventario", "Código", 11);
+            Encabezado(dgvActivos, "Nombre", "Nombre del activo", 23);
+            Encabezado(dgvActivos, "Categoria", "Categoría", 22);
+            Encabezado(dgvActivos, "TotalUnidades", "Unid.", 9);
+            Encabezado(dgvActivos, "UnidadesConProblema", "Con problema", 14);
+            Encabezado(dgvActivos, "Ubicacion", "Ubicación", 17);
         }
 
         private static void Encabezado(DataGridView g, string columna, string texto, float peso)
