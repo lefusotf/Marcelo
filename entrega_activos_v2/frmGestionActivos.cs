@@ -208,7 +208,35 @@ namespace Vistass
             int n = vista.Count;
         }
 
-        private void txtBuscar_TextChanged(object sender, EventArgs e) { AplicarFiltro(); }
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            lblBuscarHint.Visible = txtBuscar.Text.Length == 0;
+            AplicarFiltro();
+        }
+
+        // Buscador con lupa
+        private void pnlLupa_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            using (Pen p = new Pen(PaletaSistema.Tenue, 1.8f))
+            {
+                p.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                p.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+                e.Graphics.DrawEllipse(p, 8, 8, 9, 9);
+                e.Graphics.DrawLine(p, 15.5f, 15.5f, 19f, 19f);
+            }
+        }
+
+        private void pnlBuscador_Paint(object sender, PaintEventArgs e)
+        {
+            Color borde = txtBuscar.Focused ? PaletaSistema.Amarillo : Color.FromArgb(60, 66, 88);
+            using (Pen p = new Pen(borde))
+                e.Graphics.DrawRectangle(p, 0, 0, pnlBuscador.Width - 1, pnlBuscador.Height - 1);
+        }
+
+        private void txtBuscar_FocoCambiado(object sender, EventArgs e) { pnlBuscador.Invalidate(); }
+
+        private void lblBuscarHint_Click(object sender, EventArgs e) { txtBuscar.Focus(); }
 
         private void cmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
