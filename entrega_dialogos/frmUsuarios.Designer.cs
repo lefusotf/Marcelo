@@ -334,7 +334,7 @@ namespace Vistass
             this.btnRestablecer.Size = new System.Drawing.Size(240, 40);
             this.btnRestablecer.TabIndex = 10;
             this.btnRestablecer.Text = "Restablecer contraseña";
-            this.btnRestablecer.Tipo = Vistass.TipoBoton.Principal;
+            this.btnRestablecer.Tipo = Vistass.TipoBoton.Secundario;
             this.btnRestablecer.Click += new System.EventHandler(this.btnRestablecer_Click);
             // 
             // btnMiClave
@@ -346,7 +346,7 @@ namespace Vistass
             this.btnMiClave.Size = new System.Drawing.Size(240, 40);
             this.btnMiClave.TabIndex = 11;
             this.btnMiClave.Text = "Cambiar mi contraseña";
-            this.btnMiClave.Tipo = Vistass.TipoBoton.Principal;
+            this.btnMiClave.Tipo = Vistass.TipoBoton.Secundario;
             this.btnMiClave.Click += new System.EventHandler(this.btnMiClave_Click);
             // 
             // frmUsuarios
