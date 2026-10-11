@@ -300,7 +300,7 @@ namespace Vistass
                 Text = texto;
                 Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F);
                 Cursor = Cursors.Hand;
-                SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInPaint |
+                SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint |
                          ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw |
                          ControlStyles.SupportsTransparentBackColor, true);
                 BackColor = Color.Transparent;
