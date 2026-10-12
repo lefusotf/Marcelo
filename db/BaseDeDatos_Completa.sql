@@ -47,12 +47,14 @@
    REGLAS DE NEGOCIO QUE VIVEN EN LA BASE DE DATOS (no dependen de la pantalla)
    - Cada unidad fisica tiene su propio estado, codigo, ubicacion, costo y
      proveedor.
-   - Dar de baja con sp_CambiarEstadoUnidades exige un motivo (minimo 5
-     caracteres), deja fecha y motivo en la unidad, no se permite si la
-     unidad esta prestada y ese procedimiento no revierte una baja. Es el
-     unico camino con todas estas garantias: sp_RegistrarMantenimiento,
-     sp_RegistrarDevolucion o un UPDATE directo pueden dejar o sacar una
-     unidad de "Dado de baja" sin ellas.
+   - Dar de baja una unidad tiene las mismas reglas en sp_CambiarEstadoUnidades,
+     sp_CambiarEstadoUnidad, sp_RegistrarMantenimiento y sp_RegistrarDevolucion:
+     exige un motivo de 5 caracteres como minimo (el motivo, la descripcion del
+     servicio o la observacion de la devolucion), no se permite si la unidad
+     esta prestada (al devolverla si se puede), una baja no se revierte, y la
+     fecha y el motivo se guardan al entrar en baja y se conservan si la unidad
+     ya estaba de baja. Un UPDATE directo sobre la tabla no pasa por estas
+     validaciones.
    - Una unidad no puede tener dos prestamos activos ni dos reportes abiertos.
    - Prestamos a Docente / Personal administrativo apuntan a un empleado real.
    - Un solo pago vigente por empleado y mes; un mes cerrado no admite
@@ -1496,26 +1498,27 @@ BEGIN
 END;
 GO
 
--- Cambia el estado de UNA unidad SIN las validaciones de sp_CambiarEstadoUnidades (no pide motivo ni guarda
--- fecha y motivo de baja, no comprueba préstamos ni reportes abiertos, no impide revertir una baja).
--- El programa usa sp_CambiarEstadoUnidades.
+-- Cambia el estado de UNA unidad: delega en sp_CambiarEstadoUnidades (mismas validaciones y mismos errores).
+-- @Motivo solo se usa al dar de baja.
 CREATE OR ALTER PROCEDURE dbo.sp_CambiarEstadoUnidad
-    @IdUnidad INT, @IdEstado INT
+    @IdUnidad INT, @IdEstado INT, @Motivo VARCHAR(300) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
-    IF NOT EXISTS (SELECT 1 FROM dbo.Estados WHERE IdEstado = @IdEstado)
-        THROW 50060, 'El estado seleccionado no es válido.', 1;
-    UPDATE dbo.UnidadesActivo SET IdEstado = @IdEstado WHERE IdUnidad = @IdUnidad;
-    IF @@ROWCOUNT = 0
+    DECLARE @IdActivo INT = (SELECT IdActivo FROM dbo.UnidadesActivo WHERE IdUnidad = @IdUnidad);
+    IF @IdActivo IS NULL
         THROW 50061, 'La unidad no existe.', 1;
+
+    -- Delega en sp_CambiarEstadoUnidades: mismas validaciones y mismos errores
+    DECLARE @Ids VARCHAR(20) = CAST(@IdUnidad AS VARCHAR(20));
+    EXEC dbo.sp_CambiarEstadoUnidades @IdActivo = @IdActivo, @IdEstado = @IdEstado, @Ids = @Ids, @Motivo = @Motivo;
 END;
 GO
 
 -- Cambia el estado de varias unidades de un equipo. Valida: estado válido, unidades del equipo, no se da de baja
 -- una unidad prestada, no se marca en buen estado una unidad con reporte de daño abierto y una baja no se revierte.
--- Dar de baja exige un motivo (mínimo 5 caracteres) y deja fecha y motivo en la unidad.
--- Es el único camino con todas estas garantías.
+-- Dar de baja exige un motivo (mínimo 5 caracteres). La fecha y el motivo se guardan cuando la unidad entra en baja;
+-- si ya estaba de baja se conservan los originales.
 CREATE OR ALTER PROCEDURE dbo.sp_CambiarEstadoUnidades
     @IdActivo INT, @IdEstado INT, @Ids VARCHAR(MAX), @Motivo VARCHAR(300) = NULL
 AS
@@ -1552,11 +1555,19 @@ BEGIN
     IF @estado = 'Dado de baja' AND LEN(LTRIM(RTRIM(ISNULL(@Motivo, '')))) < 5
         THROW 50962, 'Indique el motivo de la baja (mínimo 5 caracteres).', 1;
 
+    -- Fecha y motivo de baja: se escriben cuando la unidad ENTRA en baja; si ya estaba de baja se
+    -- conservan los originales (solo se completan si faltaban); en cualquier otro caso no se tocan.
     UPDATE u
     SET    u.IdEstado   = @IdEstado,
-           u.FechaBaja  = CASE WHEN @estado = 'Dado de baja' THEN GETDATE() ELSE u.FechaBaja END,
-           u.MotivoBaja = CASE WHEN @estado = 'Dado de baja' THEN LEFT(LTRIM(RTRIM(@Motivo)), 300) ELSE u.MotivoBaja END
-    FROM   dbo.UnidadesActivo u JOIN @sel s ON s.IdUnidad = u.IdUnidad;
+           u.FechaBaja  = CASE WHEN @estado <> 'Dado de baja'        THEN u.FechaBaja
+                               WHEN ea.NombreEstado = 'Dado de baja' THEN ISNULL(u.FechaBaja, GETDATE())
+                               ELSE GETDATE() END,
+           u.MotivoBaja = CASE WHEN @estado <> 'Dado de baja'        THEN u.MotivoBaja
+                               WHEN ea.NombreEstado = 'Dado de baja' THEN ISNULL(u.MotivoBaja, LEFT(LTRIM(RTRIM(@Motivo)), 300))
+                               ELSE LEFT(LTRIM(RTRIM(@Motivo)), 300) END
+    FROM   dbo.UnidadesActivo u
+    JOIN   @sel s         ON s.IdUnidad  = u.IdUnidad
+    JOIN   dbo.Estados ea ON ea.IdEstado = u.IdEstado;
 END;
 GO
 
@@ -2252,14 +2263,17 @@ BEGIN
 END;
 GO
 
--- Devolución: cierra el préstamo y actualiza SOLO el estado de esa unidad.
+-- Devolución: cierra el préstamo y actualiza SOLO el estado de esa unidad. Si la unidad vuelve "Dado de baja" exige
+-- un motivo en las observaciones (mínimo 5 caracteres) y guarda fecha y motivo; una unidad que ya está de baja
+-- no puede volver a otro estado.
 CREATE OR ALTER PROCEDURE dbo.sp_RegistrarDevolucion
     @IdPrestamo INT, @IdEstadoDevolucion INT, @Observacion VARCHAR(300) = NULL
 AS
 BEGIN
     SET NOCOUNT ON; SET XACT_ABORT ON;
     BEGIN TRY
-        IF NOT EXISTS (SELECT 1 FROM dbo.Estados WHERE IdEstado = @IdEstadoDevolucion)
+        DECLARE @EstadoNuevo VARCHAR(200) = (SELECT NombreEstado FROM dbo.Estados WHERE IdEstado = @IdEstadoDevolucion);
+        IF @EstadoNuevo IS NULL
             THROW 50036, 'El estado seleccionado no es válido.', 1;
 
         BEGIN TRANSACTION;
@@ -2269,13 +2283,39 @@ BEGIN
         IF @Encontrado = 0
             THROW 50037, 'El préstamo no existe o ya fue devuelto.', 1;
 
+        DECLARE @EstadoActual VARCHAR(200) = NULL;
+        IF @IdUnidad IS NOT NULL
+        BEGIN
+            SELECT @EstadoActual = ea.NombreEstado
+            FROM dbo.UnidadesActivo u
+            JOIN dbo.Estados ea ON ea.IdEstado = u.IdEstado
+            WHERE u.IdUnidad = @IdUnidad;
+
+            -- Reglas de la baja: las mismas de sp_CambiarEstadoUnidades (el motivo es la observación)
+            IF @EstadoActual = 'Dado de baja' AND @EstadoNuevo <> 'Dado de baja'
+                THROW 50914, 'La unidad está dada de baja: una baja no se revierte. Registre la devolución con el estado "Dado de baja".', 1;
+            IF @EstadoNuevo = 'Dado de baja' AND @EstadoActual <> 'Dado de baja'
+               AND LEN(LTRIM(RTRIM(ISNULL(@Observacion, '')))) < 5
+                THROW 50962, 'Indique el motivo de la baja en las observaciones (mínimo 5 caracteres).', 1;
+        END
+
         UPDATE dbo.Prestamos
         SET Estado = 'Devuelto', FechaDevolucion = GETDATE(),
             IdEstadoDevolucion = @IdEstadoDevolucion, ObservacionDevolucion = @Observacion
         WHERE IdPrestamo = @IdPrestamo;
 
+        -- Fecha y motivo de baja: se escriben cuando la unidad ENTRA en baja; si ya estaba de baja se
+        -- conservan los originales; en cualquier otro caso no se tocan.
         IF @IdUnidad IS NOT NULL
-            UPDATE dbo.UnidadesActivo SET IdEstado = @IdEstadoDevolucion WHERE IdUnidad = @IdUnidad;
+            UPDATE dbo.UnidadesActivo
+            SET    IdEstado   = @IdEstadoDevolucion,
+                   FechaBaja  = CASE WHEN @EstadoNuevo <> 'Dado de baja'  THEN FechaBaja
+                                     WHEN @EstadoActual = 'Dado de baja'  THEN ISNULL(FechaBaja, GETDATE())
+                                     ELSE GETDATE() END,
+                   MotivoBaja = CASE WHEN @EstadoNuevo <> 'Dado de baja'  THEN MotivoBaja
+                                     WHEN @EstadoActual = 'Dado de baja'  THEN ISNULL(MotivoBaja, LEFT(LTRIM(RTRIM(@Observacion)), 300))
+                                     ELSE LEFT(LTRIM(RTRIM(@Observacion)), 300) END
+            WHERE  IdUnidad = @IdUnidad;
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
@@ -2299,9 +2339,9 @@ END;
 GO
 
 -- Mantenimiento: registra el servicio de una unidad y actualiza su estado; si se indica @IdReporte, cierra ese
--- reporte de daño (error 50051 si ya estaba cerrado). Si el estado resultante es "Dado de baja", guarda la fecha y,
--- como motivo, la descripción; no aplica las validaciones de sp_CambiarEstadoUnidades (motivo de 5 caracteres,
--- unidad prestada, baja irreversible).
+-- reporte de daño (error 50051 si ya estaba cerrado). Si el estado resultante es "Dado de baja" aplica las reglas
+-- de la baja (unidad no prestada, motivo = descripción de 5 caracteres como mínimo, una baja no se revierte)
+-- y guarda la fecha y el motivo.
 CREATE OR ALTER PROCEDURE dbo.sp_RegistrarMantenimiento
     @IdUnidad INT, @Fecha DATETIME,
     @Tipo VARCHAR(12), @Descripcion VARCHAR(500), @Costo DECIMAL(10,2),
@@ -2313,11 +2353,28 @@ BEGIN
         IF LEN(LTRIM(RTRIM(ISNULL(@Descripcion, '')))) = 0
             THROW 50050, 'La descripción del servicio es obligatoria.', 1;
 
-        DECLARE @IdActivo INT, @Codigo VARCHAR(50);
-        SELECT @IdActivo = IdActivo, @Codigo = CodigoInventario
-        FROM dbo.UnidadesActivo WHERE IdUnidad = @IdUnidad;
+        DECLARE @IdActivo INT, @Codigo VARCHAR(50), @EstadoActual VARCHAR(200);
+        SELECT @IdActivo = u.IdActivo, @Codigo = u.CodigoInventario, @EstadoActual = ea.NombreEstado
+        FROM dbo.UnidadesActivo u
+        JOIN dbo.Estados ea ON ea.IdEstado = u.IdEstado
+        WHERE u.IdUnidad = @IdUnidad;
         IF @IdActivo IS NULL
             THROW 50052, 'La unidad no existe.', 1;
+
+        DECLARE @EstadoNuevo VARCHAR(200) = (SELECT NombreEstado FROM dbo.Estados WHERE IdEstado = @IdEstadoResultante);
+        IF @EstadoNuevo IS NULL
+            THROW 50910, 'El estado seleccionado no es válido.', 1;
+
+        -- Reglas de la baja: las mismas de sp_CambiarEstadoUnidades
+        IF @EstadoNuevo = 'Dado de baja' AND @EstadoActual <> 'Dado de baja'
+        BEGIN
+            IF EXISTS (SELECT 1 FROM dbo.Prestamos WHERE IdUnidad = @IdUnidad AND Estado = 'Activo')
+                THROW 50912, 'No se puede dar de baja una unidad que está prestada. Registre primero su devolución.', 1;
+            IF LEN(LTRIM(RTRIM(@Descripcion))) < 5
+                THROW 50962, 'Indique el motivo de la baja (mínimo 5 caracteres).', 1;
+        END
+        IF @EstadoActual = 'Dado de baja' AND @EstadoNuevo <> 'Dado de baja'
+            THROW 50914, 'La unidad está dada de baja: una baja no se revierte.', 1;
 
         BEGIN TRANSACTION;
         INSERT INTO dbo.MantenimientosActivo
@@ -2325,13 +2382,17 @@ BEGIN
         VALUES (@IdActivo, @IdUnidad, @Codigo, @Fecha, @Tipo, LTRIM(RTRIM(@Descripcion)), @Costo,
                 @IdEstadoResultante, @IdReporte, @Usuario);
 
-        UPDATE u
-        SET    u.IdEstado   = @IdEstadoResultante,
-               u.FechaBaja  = CASE WHEN es.NombreEstado = 'Dado de baja' THEN GETDATE() ELSE u.FechaBaja END,
-               u.MotivoBaja = CASE WHEN es.NombreEstado = 'Dado de baja' THEN LEFT(LTRIM(RTRIM(@Descripcion)), 300) ELSE u.MotivoBaja END
-        FROM   dbo.UnidadesActivo u
-        JOIN   dbo.Estados es ON es.IdEstado = @IdEstadoResultante
-        WHERE  u.IdUnidad = @IdUnidad;
+        -- Fecha y motivo de baja: se escriben cuando la unidad ENTRA en baja (el motivo es la descripción);
+        -- si ya estaba de baja se conservan los originales; en cualquier otro caso no se tocan.
+        UPDATE dbo.UnidadesActivo
+        SET    IdEstado   = @IdEstadoResultante,
+               FechaBaja  = CASE WHEN @EstadoNuevo <> 'Dado de baja'  THEN FechaBaja
+                                 WHEN @EstadoActual = 'Dado de baja'  THEN ISNULL(FechaBaja, GETDATE())
+                                 ELSE GETDATE() END,
+               MotivoBaja = CASE WHEN @EstadoNuevo <> 'Dado de baja'  THEN MotivoBaja
+                                 WHEN @EstadoActual = 'Dado de baja'  THEN ISNULL(MotivoBaja, LEFT(LTRIM(RTRIM(@Descripcion)), 300))
+                                 ELSE LEFT(LTRIM(RTRIM(@Descripcion)), 300) END
+        WHERE  IdUnidad = @IdUnidad;
 
         IF @IdReporte IS NOT NULL
         BEGIN
@@ -3546,7 +3607,6 @@ GO
 --     50410  El salón no existe.
 --     50411  (mensaje armado)
 -- sp_CambiarEstadoUnidad
---     50060  El estado seleccionado no es válido.
 --     50061  La unidad no existe.
 -- sp_CambiarEstadoUnidades
 --     50910  El estado seleccionado no es válido.
@@ -3621,10 +3681,16 @@ GO
 -- sp_RegistrarDevolucion
 --     50036  El estado seleccionado no es válido.
 --     50037  El préstamo no existe o ya fue devuelto.
+--     50914  La unidad está dada de baja: una baja no se revierte. Registre la devolución con el estado "Dado de baja".
+--     50962  Indique el motivo de la baja en las observaciones (mínimo 5 caracteres).
 -- sp_RegistrarMantenimiento
 --     50050  La descripción del servicio es obligatoria.
 --     50051  El reporte de daño ya estaba cerrado.
 --     50052  La unidad no existe.
+--     50910  El estado seleccionado no es válido.
+--     50912  No se puede dar de baja una unidad que está prestada. Registre primero su devolución.
+--     50914  La unidad está dada de baja: una baja no se revierte.
+--     50962  Indique el motivo de la baja (mínimo 5 caracteres).
 -- sp_RegistrarMovimientoConsumible
 --     50040  El tipo de movimiento debe ser Entrada o Salida.
 --     50041  La cantidad debe ser mayor que cero.
