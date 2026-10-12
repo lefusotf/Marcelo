@@ -11,8 +11,8 @@
      una baja no se revierte.
    - La fecha y el motivo de baja se guardan cuando la unidad ENTRA en baja; si ya
      estaba de baja se conservan los originales (antes se sobrescribian).
-   - sp_CambiarEstadoUnidad (la version antigua, sin uso en el programa) ahora
-     delega en sp_CambiarEstadoUnidades.
+   - sp_CambiarEstadoUnidad (la version antigua, para una sola unidad) ahora
+     delega en sp_CambiarEstadoUnidades; si la usas para dar de baja, pasa @Motivo.
 
    Los mensajes de error salen en pantalla igual que los demas errores del sistema.
    Ejecutalo con SSMS (F5).

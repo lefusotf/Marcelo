@@ -3608,6 +3608,7 @@ GO
 --     50411  (mensaje armado)
 -- sp_CambiarEstadoUnidad
 --     50061  La unidad no existe.
+--     (ademas propaga los errores de sp_CambiarEstadoUnidades: 50910 a 50914 y 50962)
 -- sp_CambiarEstadoUnidades
 --     50910  El estado seleccionado no es válido.
 --     50911  Alguna de las unidades no existe o no pertenece a este activo.
