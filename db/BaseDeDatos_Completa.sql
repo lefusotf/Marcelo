@@ -23,7 +23,7 @@
    COMO USARLO
    - Abrelo en SQL Server Management Studio y presiona F5 (ejecutar todo).
    - Funciona en SQL Server 2017 o superior (incluido LocalDB 2017+).
-   - Si lo ejecutas con sqlcmd usa:
+   - Se recomienda SSMS. Con sqlcmd (no probado con este archivo) seria:
        sqlcmd -S (localdb)\MSSQLLocalDB -E -I -f 65001 -i BaseDeDatos_Completa.sql
      (-I activa QUOTED_IDENTIFIER, que exigen los indices filtrados; el script
       tambien lo activa en su primer lote, asi que -I es una precaucion extra;
@@ -67,6 +67,8 @@
 /* =====================================================================
    1. BASE DE DATOS
    ===================================================================== */
+SET NOEXEC OFF;   -- por si una ejecucion anterior cancelada dejo activa la guardia de mas abajo
+GO
 SET QUOTED_IDENTIFIER ON;
 SET ANSI_NULLS ON;
 SET ANSI_PADDING ON;
@@ -3154,10 +3156,11 @@ INSERT INTO #Niveles VALUES
 
 IF OBJECT_ID('tempdb..#Nuevos') IS NOT NULL DROP TABLE #Nuevos;
 CREATE TABLE #Nuevos (
-    Nombre NVARCHAR(200), Cargo NVARCHAR(100), Nivel CHAR(1),
+    Nombre NVARCHAR(200) COLLATE DATABASE_DEFAULT, Cargo NVARCHAR(100) COLLATE DATABASE_DEFAULT, Nivel CHAR(1),
     Contratacion DATE, Nacimiento DATE,
-    EstadoCivil NVARCHAR(50), Religion NVARCHAR(50),
-    Telefono NVARCHAR(20), Correo NVARCHAR(100), Estado NVARCHAR(50)
+    EstadoCivil NVARCHAR(50) COLLATE DATABASE_DEFAULT, Religion NVARCHAR(50) COLLATE DATABASE_DEFAULT,
+    Telefono NVARCHAR(20) COLLATE DATABASE_DEFAULT, Correo NVARCHAR(100) COLLATE DATABASE_DEFAULT,
+    Estado NVARCHAR(50) COLLATE DATABASE_DEFAULT
 );
 
 INSERT INTO #Nuevos VALUES
@@ -3247,8 +3250,8 @@ GO
 -- 8.3 Salones (con su responsable)
 IF OBJECT_ID('tempdb..#Salones') IS NOT NULL DROP TABLE #Salones;
 CREATE TABLE #Salones (
-    Orden INT IDENTITY(1,1), Nombre NVARCHAR(50), Tipo NVARCHAR(30),
-    Capacidad INT, Edificio NVARCHAR(100), Responsable NVARCHAR(200)
+    Orden INT IDENTITY(1,1), Nombre NVARCHAR(50) COLLATE DATABASE_DEFAULT, Tipo NVARCHAR(30) COLLATE DATABASE_DEFAULT,
+    Capacidad INT, Edificio NVARCHAR(100) COLLATE DATABASE_DEFAULT, Responsable NVARCHAR(200) COLLATE DATABASE_DEFAULT
 );
 INSERT INTO #Salones (Nombre, Tipo, Capacidad, Edificio, Responsable) VALUES
 (N'Aula Séptimo A',            N'Aula',        35,  N'Edificio A', NULL),
@@ -3281,7 +3284,8 @@ GO
 
 -- 8.4 Catalogo de equipos (31 tipos). Entran asignados a la bodega.
 IF OBJECT_ID('tempdb..#Catalogo') IS NOT NULL DROP TABLE #Catalogo;
-CREATE TABLE #Catalogo (Orden INT IDENTITY(1,1), Nombre NVARCHAR(100), Categoria NVARCHAR(100));
+CREATE TABLE #Catalogo (Orden INT IDENTITY(1,1), Nombre NVARCHAR(100) COLLATE DATABASE_DEFAULT,
+                        Categoria NVARCHAR(100) COLLATE DATABASE_DEFAULT);
 INSERT INTO #Catalogo (Nombre, Categoria) VALUES
 (N'Pupitre individual',        N'Mobiliario Escolar'),
 (N'Escritorio de docente',     N'Mobiliario Escolar'),
@@ -3335,7 +3339,8 @@ GO
 -- 8.5 Unidades fisicas por salon (cada una con su propio estado) y reportes de dano abiertos.
 --     Todo o nada: si algo falla, no queda nada a medias y se puede volver a ejecutar.
 IF OBJECT_ID('tempdb..#Dist') IS NOT NULL DROP TABLE #Dist;
-CREATE TABLE #Dist (Orden INT IDENTITY(1,1), Salon NVARCHAR(50), Activo NVARCHAR(100), Cantidad INT, Estado NVARCHAR(50));
+CREATE TABLE #Dist (Orden INT IDENTITY(1,1), Salon NVARCHAR(50) COLLATE DATABASE_DEFAULT,
+                    Activo NVARCHAR(100) COLLATE DATABASE_DEFAULT, Cantidad INT, Estado NVARCHAR(50) COLLATE DATABASE_DEFAULT);
 INSERT INTO #Dist (Salon, Activo, Cantidad, Estado) VALUES
 (N'Aula Séptimo A', N'Pupitre individual', 26, N'Bueno'), (N'Aula Séptimo A', N'Pupitre individual', 3, N'Regular'), (N'Aula Séptimo A', N'Pupitre individual', 1, N'Malo'),
 (N'Aula Séptimo A', N'Escritorio de docente', 1, N'Bueno'), (N'Aula Séptimo A', N'Silla de docente', 1, N'Bueno'),
@@ -3454,16 +3459,17 @@ ELSE
 -- para completar tambien las bajas hechas antes de que existiera el motivo (solo llena los vacios).
 UPDATE u
 SET    u.FechaBaja  = ISNULL(u.FechaBaja, u.FechaAlta),
-       u.MotivoBaja = ISNULL(u.MotivoBaja, 'Baja del inventario inicial (sin motivo registrado)')
+       u.MotivoBaja = ISNULL(u.MotivoBaja, 'Baja sin motivo registrado')
 FROM   dbo.UnidadesActivo u
 JOIN   dbo.Estados e ON e.IdEstado = u.IdEstado
 WHERE  e.NombreEstado = 'Dado de baja' AND (u.FechaBaja IS NULL OR u.MotivoBaja IS NULL);
 
-SET XACT_ABORT OFF;
-DROP TABLE #Dist;
 GO
 
--- Fin de la seccion 8: se quita el usuario de sesion; lo que haga el programa lo registra con el usuario que inicie sesion.
+-- Fin de la seccion 8: se deshace lo del lote anterior (aunque haya terminado por un error) y se quita el usuario
+-- de sesion; lo que haga el programa lo registra con el usuario que inicie sesion.
+SET XACT_ABORT OFF;
+IF OBJECT_ID('tempdb..#Dist') IS NOT NULL DROP TABLE #Dist;
 EXEC sys.sp_set_session_context @key = N'Usuario', @value = NULL;
 GO
 
