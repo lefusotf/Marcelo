@@ -119,6 +119,7 @@ namespace Vistass
             if (p1 != null) cmbPrestActivo.SelectedValue = p1;
             if (p2 != null) cmbMantActivo.SelectedValue = p2;
             cargando = previo;
+            CargarUnidadesMant();
         }
 
         private void CargarActivos()

@@ -48,3 +48,11 @@ Visibles: Nuevo pago, Generar planilla, Editar, Marcar pagado y Cerrar mes. En *
 Anular. Cerrar mes dice "Reabrir mes" cuando el mes está cerrado. El menú copia el texto y si está habilitado de los botones originales.
 Archivos: `frmGestionPlanillas.cs` y `frmGestionPlanillas.Designer.cs`.
 Gestión de salones se dejó igual: no tiene más de 4 botones por fila.
+
+## Mantenimiento: ya no se escribe el código de la unidad
+
+El formulario decía "Código (opcional)" pero el programa lo exigía, y había que escribirlo a mano. Ahora es una lista **Unidad**:
+al elegir el equipo se cargan sus unidades ("ACT-0004-001 · Aula 1 · Bueno"), sin las dadas de baja ni las que tienen un
+reporte de daño abierto. Si el equipo tiene una sola unidad, se elige sola. El estado resultante parte del estado actual de la
+unidad. La descripción pide mínimo 5 caracteres. Los demás campos se acomodaron en dos columnas.
+Archivos: `frmGestionActivos.Mantenimiento.cs` y `frmGestionActivos.cs` (en `Vista/Gestion De Activos/`).
