@@ -44,7 +44,7 @@ Los cuatro botones viejos siguen en el Designer pero ocultos, así que no se rom
 
 ## Gestión de planillas: menos botones
 
-Visibles: Nuevo pago, Editar, Marcar pagado, Anular, Boleta PDF, Exportar. En **Más acciones**: Generar planilla y
-Cerrar mes (que dice "Reabrir mes" cuando el mes está cerrado). El menú copia el texto y si está habilitado de los botones originales.
+Visibles: Nuevo pago, Generar planilla, Editar, Marcar pagado y Cerrar mes. En **Más acciones**: Boleta PDF, Exportar y
+Anular. Cerrar mes dice "Reabrir mes" cuando el mes está cerrado. El menú copia el texto y si está habilitado de los botones originales.
 Archivos: `frmGestionPlanillas.cs` y `frmGestionPlanillas.Designer.cs`.
 Gestión de salones se dejó igual: no tiene más de 4 botones por fila.

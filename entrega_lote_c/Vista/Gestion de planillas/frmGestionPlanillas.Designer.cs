@@ -256,7 +256,6 @@
             // 
             this.btnGenerarPlanilla.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGenerarPlanilla.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGenerarPlanilla.Visible = false;       // ahora está en "Más acciones"
             this.btnGenerarPlanilla.Location = new System.Drawing.Point(144, 58);
             this.btnGenerarPlanilla.Name = "btnGenerarPlanilla";
             this.btnGenerarPlanilla.Size = new System.Drawing.Size(150, 38);
@@ -269,7 +268,7 @@
             // 
             this.btnEditarPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEditarPago.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnEditarPago.Location = new System.Drawing.Point(144, 58);
+            this.btnEditarPago.Location = new System.Drawing.Point(302, 58);
             this.btnEditarPago.Name = "btnEditarPago";
             this.btnEditarPago.Size = new System.Drawing.Size(90, 38);
             this.btnEditarPago.TabIndex = 6;
@@ -281,7 +280,7 @@
             // 
             this.btnMarcarPagado.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMarcarPagado.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMarcarPagado.Location = new System.Drawing.Point(242, 58);
+            this.btnMarcarPagado.Location = new System.Drawing.Point(400, 58);
             this.btnMarcarPagado.Name = "btnMarcarPagado";
             this.btnMarcarPagado.Size = new System.Drawing.Size(140, 38);
             this.btnMarcarPagado.TabIndex = 7;
@@ -293,6 +292,7 @@
             // 
             this.btnAnularPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAnularPago.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnAnularPago.Visible = false;            // ahora está en "Más acciones"
             this.btnAnularPago.Location = new System.Drawing.Point(390, 58);
             this.btnAnularPago.Name = "btnAnularPago";
             this.btnAnularPago.Size = new System.Drawing.Size(100, 38);
@@ -305,6 +305,7 @@
             // 
             this.btnBoleta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBoleta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBoleta.Visible = false;                // ahora está en "Más acciones"
             this.btnBoleta.Location = new System.Drawing.Point(498, 58);
             this.btnBoleta.Name = "btnBoleta";
             this.btnBoleta.Size = new System.Drawing.Size(120, 38);
@@ -317,6 +318,7 @@
             // 
             this.btnExportarPdf.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarPdf.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnExportarPdf.Visible = false;           // ahora está en "Más acciones"
             this.btnExportarPdf.Location = new System.Drawing.Point(626, 58);
             this.btnExportarPdf.Name = "btnExportarPdf";
             this.btnExportarPdf.Size = new System.Drawing.Size(110, 38);
@@ -329,8 +331,7 @@
             // 
             this.btnCierrePeriodo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCierrePeriodo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCierrePeriodo.Visible = false;         // ahora está en "Más acciones"
-            this.btnCierrePeriodo.Location = new System.Drawing.Point(1054, 58);
+            this.btnCierrePeriodo.Location = new System.Drawing.Point(548, 58);
             this.btnCierrePeriodo.Name = "btnCierrePeriodo";
             this.btnCierrePeriodo.Size = new System.Drawing.Size(130, 38);
             this.btnCierrePeriodo.TabIndex = 11;
@@ -345,7 +346,7 @@
             // 
             this.btnMas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMas.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMas.Location = new System.Drawing.Point(744, 58);
+            this.btnMas.Location = new System.Drawing.Point(686, 58);
             this.btnMas.Name = "btnMas";
             this.btnMas.Size = new System.Drawing.Size(150, 38);
             this.btnMas.TabIndex = 12;
