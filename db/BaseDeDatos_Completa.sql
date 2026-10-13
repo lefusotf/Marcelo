@@ -14,9 +14,10 @@
      6. Triggers (20): historial de cambios y registro de actividad
      7. Datos iniciales (roles, estados, estados de empleado, categorias,
         cargos, grados, secciones y bodega)
-     8. Datos de ejemplo de la institucion: 50 empleados, 5 estructuras
-        salariales, 13 salones (mas la bodega), 31 tipos de equipo,
-        692 unidades fisicas y 4 reportes de dano abiertos
+     8. Datos de ejemplo de la institucion: 50 empleados (26 docentes con el
+        cargo "Docente" y su materia), 8 materias, 5 estructuras salariales,
+        13 salones (mas la bodega), 31 tipos de equipo, 692 unidades
+        fisicas y 4 reportes de dano abiertos
      9. Verificacion
     10. Anexo: codigos de error (THROW) de cada procedimiento
 
@@ -129,7 +130,7 @@ CREATE TABLE dbo.Categorias (
 );
 GO
 
--- Cargos del personal (Director, Docente de ..., Conserje...).
+-- Cargos del personal (Director, Docente, Conserje...). Un docente tiene el cargo Docente y sus materias van en EmpleadoMaterias.
 IF OBJECT_ID(N'dbo.Cargos', 'U') IS NULL
 CREATE TABLE dbo.Cargos (
     IdCargo            INT IDENTITY(1,1) NOT NULL,
@@ -3151,13 +3152,12 @@ IF NOT EXISTS (SELECT 1 FROM dbo.Categorias)
 
 IF NOT EXISTS (SELECT 1 FROM dbo.Cargos)
     INSERT INTO dbo.Cargos (NombreCargo)
-    VALUES ('Director'), ('Subdirectora'), ('Docente de Sistemas'), ('Docente de Matemáticas'),
-           ('Docente de Física'), ('Secretaria Administrativa'), ('Técnico de Laboratorio'),
-           ('Bibliotecaria'), ('Conserje'), ('Orientadora'), ('Contador'), ('Docente de Inglés'),
-           ('Técnico de Soporte'), ('Enfermera'), ('Jefe de Seguridad'), ('Docente de Natacion'),
-           ('Recepcionista'), ('Docente de Ciencias'), ('Encargado de Limpieza'),
-           ('Psicóloga Escolar'), ('Coordinador Académico'), ('Docente de Sociales'),
-           ('Chofer'), ('Asistente Contable'), ('Docente de Educación Física');
+    VALUES ('Director'), ('Subdirectora'), ('Docente'), ('Secretaria Administrativa'),
+           ('Técnico de Laboratorio'), ('Bibliotecaria'), ('Conserje'), ('Orientadora'), ('Contador'),
+           ('Técnico de Soporte'), ('Enfermera'), ('Jefe de Seguridad'), ('Recepcionista'),
+           ('Encargado de Limpieza'), ('Psicóloga Escolar'), ('Coordinador Académico'), ('Chofer'),
+           ('Asistente Contable');
+-- Un docente tiene el cargo "Docente"; las materias que da se guardan aparte (Materias y EmpleadoMaterias).
 
 IF NOT EXISTS (SELECT 1 FROM dbo.Grados)
     INSERT INTO dbo.Grados (NombreGrado, Orden)
@@ -3200,8 +3200,8 @@ GO
 EXEC sys.sp_set_session_context @key = N'Usuario', @value = N'Script de instalación', @read_only = 0;
 GO
 
--- 8.1 y 8.2 Estructuras salariales (catalogo de salarios) y empleados (50: direccion, docentes,
---     administrativos y servicios). Niveles: A = Director · B = Subdireccion/Coordinacion ·
+-- 8.1 y 8.2 Estructuras salariales (catalogo de salarios), empleados (50: direccion, docentes,
+--     administrativos y servicios) y materias de los docentes. Niveles: A = Director · B = Subdireccion/Coordinacion ·
 --     C = Docentes · D = Administrativo/tecnico · E = Servicios generales
 IF OBJECT_ID('tempdb..#Niveles') IS NOT NULL DROP TABLE #Niveles;
 CREATE TABLE #Niveles (
@@ -3288,6 +3288,13 @@ WHERE EXISTS (SELECT 1 FROM #Nuevos n
                   WHERE p.SalarioBase = v.SalarioBase AND p.Descuento = v.Descuento AND p.Bono = v.Bono
                     AND p.Estado = 1);
 
+-- Los empleados que se crean en esta ejecucion (los que ya existian no se tocan)
+IF OBJECT_ID('tempdb..#Altas') IS NOT NULL DROP TABLE #Altas;
+SELECT n.Nombre INTO #Altas
+FROM #Nuevos n
+WHERE NOT EXISTS (SELECT 1 FROM dbo.Empleados e WHERE e.Nombre = n.Nombre);
+
+-- El listado dice "Docente de Fisica": el cargo es "Docente" y "Fisica" es su materia
 INSERT INTO dbo.Empleados
        (Nombre, FechaContratacion, IdCargo, IdEstado, IdPlanilla,
         FechaNacimiento, EstadoCivil, Religion, Telefono, Correo, Direccion)
@@ -3300,10 +3307,33 @@ SELECT n.Nombre, n.Contratacion, c.IdCargo, ee.IdEstado,
         ORDER BY p.IdPlanilla),
        n.Nacimiento, n.EstadoCivil, n.Religion, n.Telefono, n.Correo, NULL
 FROM #Nuevos n
-JOIN dbo.Cargos c            ON c.NombreCargo = n.Cargo
+JOIN dbo.Cargos c            ON c.NombreCargo = CASE WHEN n.Cargo LIKE N'Docente de %' THEN N'Docente' ELSE n.Cargo END
 JOIN dbo.EstadosEmpleado ee  ON ee.NombreEstado = n.Estado
 WHERE NOT EXISTS (SELECT 1 FROM dbo.Empleados e WHERE e.Nombre = n.Nombre);
 
+-- Materias: una por cada "Docente de X" del listado (Natacion se escribe con tilde)
+INSERT INTO dbo.Materias (NombreMateria)
+SELECT DISTINCT x.Materia
+FROM #Nuevos n
+JOIN #Altas a ON a.Nombre = n.Nombre
+CROSS APPLY (SELECT CASE WHEN LTRIM(SUBSTRING(n.Cargo, 12, 100)) = N'Natacion' THEN N'Natación'
+                         ELSE LTRIM(SUBSTRING(n.Cargo, 12, 100)) END AS Materia) x
+WHERE n.Cargo LIKE N'Docente de %'
+  AND NOT EXISTS (SELECT 1 FROM dbo.Materias m WHERE m.NombreMateria = x.Materia);
+
+-- A cada docente nuevo se le asigna la materia que decia su cargo
+INSERT INTO dbo.EmpleadoMaterias (IdEmpleado, IdMateria)
+SELECT e.IdEmpleado, m.IdMateria
+FROM #Nuevos n
+JOIN #Altas a ON a.Nombre = n.Nombre
+CROSS APPLY (SELECT CASE WHEN LTRIM(SUBSTRING(n.Cargo, 12, 100)) = N'Natacion' THEN N'Natación'
+                         ELSE LTRIM(SUBSTRING(n.Cargo, 12, 100)) END AS Materia) x
+JOIN dbo.Empleados e ON e.Nombre = n.Nombre
+JOIN dbo.Materias m  ON m.NombreMateria = x.Materia
+WHERE n.Cargo LIKE N'Docente de %'
+  AND NOT EXISTS (SELECT 1 FROM dbo.EmpleadoMaterias z WHERE z.IdEmpleado = e.IdEmpleado AND z.IdMateria = m.IdMateria);
+
+DROP TABLE #Altas;
 DROP TABLE #Nuevos;
 DROP TABLE #Niveles;
 GO
@@ -3539,8 +3569,8 @@ GO
    ===================================================================== */
 -- Resultado esperado en una instalacion limpia: Tablas 30, Vistas 27,
 -- Procedimientos 34, Triggers 20, Funciones 6.
--- Datos de ejemplo: Empleados 50, Salones 14 (13 de ejemplo + la Bodega central), TiposDeEquipo 31,
--- Unidades 692, ReportesAbiertos 4.
+-- Datos de ejemplo: Empleados 50, Cargos 18, Materias 8, DocentesConMateria 26, Salones 14 (13 de ejemplo +
+-- la Bodega central), TiposDeEquipo 31, Unidades 692, ReportesAbiertos 4.
 SELECT 'Tablas'         AS Objeto, COUNT(*) AS Total FROM sys.tables
 UNION ALL SELECT 'Vistas',         COUNT(*) FROM sys.views
 UNION ALL SELECT 'Procedimientos', COUNT(*) FROM sys.procedures
@@ -3548,6 +3578,9 @@ UNION ALL SELECT 'Triggers',       COUNT(*) FROM sys.triggers
 UNION ALL SELECT 'Funciones',      COUNT(*) FROM sys.objects WHERE type IN ('FN', 'IF', 'TF');
 
 SELECT (SELECT COUNT(*) FROM dbo.Empleados)       AS Empleados,
+       (SELECT COUNT(*) FROM dbo.Cargos)          AS Cargos,
+       (SELECT COUNT(*) FROM dbo.Materias)        AS Materias,
+       (SELECT COUNT(DISTINCT IdEmpleado) FROM dbo.EmpleadoMaterias) AS DocentesConMateria,
        (SELECT COUNT(*) FROM dbo.Salones)         AS Salones,
        (SELECT COUNT(*) FROM dbo.GestionActivos)  AS TiposDeEquipo,
        (SELECT COUNT(*) FROM dbo.UnidadesActivo)  AS Unidades,
