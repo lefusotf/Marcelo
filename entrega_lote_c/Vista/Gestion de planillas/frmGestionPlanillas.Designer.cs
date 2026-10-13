@@ -293,8 +293,7 @@
             // 
             this.btnAnularPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAnularPago.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnAnularPago.Visible = false;            // ahora está en "Más acciones"
-            this.btnAnularPago.Location = new System.Drawing.Point(548, 58);
+            this.btnAnularPago.Location = new System.Drawing.Point(390, 58);
             this.btnAnularPago.Name = "btnAnularPago";
             this.btnAnularPago.Size = new System.Drawing.Size(100, 38);
             this.btnAnularPago.TabIndex = 8;
@@ -306,7 +305,7 @@
             // 
             this.btnBoleta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBoleta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnBoleta.Location = new System.Drawing.Point(390, 58);
+            this.btnBoleta.Location = new System.Drawing.Point(498, 58);
             this.btnBoleta.Name = "btnBoleta";
             this.btnBoleta.Size = new System.Drawing.Size(120, 38);
             this.btnBoleta.TabIndex = 9;
@@ -318,7 +317,7 @@
             // 
             this.btnExportarPdf.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarPdf.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnExportarPdf.Location = new System.Drawing.Point(518, 58);
+            this.btnExportarPdf.Location = new System.Drawing.Point(626, 58);
             this.btnExportarPdf.Name = "btnExportarPdf";
             this.btnExportarPdf.Size = new System.Drawing.Size(110, 38);
             this.btnExportarPdf.TabIndex = 10;
@@ -346,7 +345,7 @@
             // 
             this.btnMas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMas.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMas.Location = new System.Drawing.Point(636, 58);
+            this.btnMas.Location = new System.Drawing.Point(744, 58);
             this.btnMas.Name = "btnMas";
             this.btnMas.Size = new System.Drawing.Size(150, 38);
             this.btnMas.TabIndex = 12;

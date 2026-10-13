@@ -44,7 +44,7 @@ namespace Vistass
             toolTip1.SetToolTip(btnExportarPdf, "Exportar lo que se está viendo (PDF o Excel)");
             toolTip1.SetToolTip(cmbPeriodo, "Filtrar por mes de pago");
             toolTip1.SetToolTip(cmbEstadoPago, "Filtrar por estado de pago");
-            toolTip1.SetToolTip(btnMas, "Generar planilla, anular un pago y cerrar o reabrir el mes");
+            toolTip1.SetToolTip(btnMas, "Generar planilla y cerrar o reabrir el mes");
             toolTip1.SetToolTip(btnBoleta, "Genera la boleta de pago (comprobante) del pago seleccionado en PDF");
 
 
@@ -533,7 +533,7 @@ namespace Vistass
         }
 
         // ---------------------------------------------------------------
-        //  Menú "Más acciones": generar planilla, anular y cerrar/reabrir el mes.
+        //  Menú "Más acciones": generar planilla y cerrar/reabrir el mes.
         //  Se arma cada vez que se abre, con el mismo estado (habilitado, texto) de los botones originales.
         // ---------------------------------------------------------------
         private sealed class ColoresMenuOscuro : ProfessionalColorTable
@@ -559,7 +559,6 @@ namespace Vistass
 
             Agregar(menu, btnGenerarPlanilla, btnGenerarPlanilla_Click);
             menu.Items.Add(new ToolStripSeparator());
-            Agregar(menu, btnAnularPago, btnAnularPago_Click);
             Agregar(menu, btnCierrePeriodo, btnCierrePeriodo_Click);   // dice "Cerrar mes" o "Reabrir mes"
 
             menu.Closed += (s, ev) => menu.Dispose();
