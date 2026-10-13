@@ -31,7 +31,6 @@ Del lote A al C hay dos puntos que no pude confirmar con certeza sin ver tu pant
 Windows (el ajuste fue de altura, no de diseño) y la tabla "Catálogo de salarios" (arreglé el borde roto; si lo que te molestaba
 era otra cosa, mándame una captura). El resto lo verifiqué en pantalla.
 
-## Corrección importante: `Vista/Estilizadores/ControlesTema.cs`
+## `Vista/Estilizadores/ControlesTema.cs`
 
-La versión anterior de este archivo (lotes A y B) hacía que las filas de las tablas se pintaran mal (franjas con
-puntos que solo se veían bien al pasar el cursor). Esta versión lo corrige. Reemplaza `ControlesTema.cs` con el de esta carpeta.
+Este archivo ya no tapa la fila cortada del final de las tablas (esa corrección pintaba mal las filas). Reemplázalo con el de esta carpeta.
