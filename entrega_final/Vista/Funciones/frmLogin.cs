@@ -218,109 +218,85 @@ namespace loginn
             pnlClave.Invalidate();
         }
 
+        // Devuelve el nombre del rol si el usuario puede entrar, o null si no.
+        // Dos pasos separados y SIEMPRE los dos, sea cual sea la forma en que está guardada la clave:
+        //   1) AUTENTICAR: ¿la clave es correcta? Por defecto NO lo es (si algo falta o falla, se rechaza).
+        //   2) AUTORIZAR:  ¿la cuenta está activa y es Administrador?
         private string ValidarCredenciales(string user, string pass)
         {
-            string nombreRol = null;
             string query = @"SELECT r.NombreRol, u.Clave, u.IdUsuario, u.Activo, u.NombreCompleto
                      FROM Usuarios u
                      INNER JOIN Roles r ON u.IdRol = r.IdRol
                      WHERE u.Usuario = @user";
 
-            using (SqlConnection conexion = Conexion.Conectar())
+            try
             {
+                using (SqlConnection conexion = Conexion.Conectar())
                 using (SqlCommand cmd = new SqlCommand(query, conexion))
                 {
                     cmd.Parameters.AddWithValue("@user", user);
+                    conexion.Open();
 
-                    try
+                    string rol, hashGuardado, nombreCompleto;
+                    int idUsuario;
+                    bool activo;
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        conexion.Open();
-                        string hashGuardado = null;
-                        int idUsuario = 0;
-                        bool activo = true;
-                        string nombreCompleto = "";
-                        
+                        if (!reader.Read()) return null;                      // el usuario no existe
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        rol = reader["NombreRol"].ToString();
+                        hashGuardado = reader["Clave"].ToString();           // si la columna es NULL queda ""
+                        idUsuario = Convert.ToInt32(reader["IdUsuario"]);
+                        activo = Convert.ToBoolean(reader["Activo"]);
+                        nombreCompleto = reader["NombreCompleto"] == DBNull.Value ? "" : reader["NombreCompleto"].ToString();
+                    }
+
+                    // 1) AUTENTICAR. Una clave vacía nunca coincide con nada: no entra.
+                    bool claveValida = false;
+                    bool migrarHash = false;
+
+                    if (hashGuardado.StartsWith("$2"))
+                    {
+                        try { claveValida = Modelos.Utils.PasswordHasher.Verificar(pass, hashGuardado); }
+                        catch { claveValida = false; }
+                    }
+                    else if (hashGuardado.Length > 0 && hashGuardado == pass)
+                    {
+                        // Clave antigua guardada en texto plano: se acepta y se convierte a hash (paso 3).
+                        claveValida = true;
+                        migrarHash = true;
+                    }
+
+                    if (!claveValida) return null;
+
+                    // 2) AUTORIZAR. Se aplica siempre, también a las cuentas con clave antigua.
+                    if (!activo) { motivoRechazo = "inactivo"; return null; }
+                    if (!string.Equals(rol, "Administrador", StringComparison.OrdinalIgnoreCase))
+                    { motivoRechazo = "no_admin"; return null; }
+
+                    // 3) Solo si la cuenta puede entrar se reemplaza la clave antigua por su hash.
+                    if (migrarHash)
+                    {
+                        using (SqlCommand updateCmd = new SqlCommand(
+                            "UPDATE Usuarios SET Clave = @nuevoHash WHERE IdUsuario = @id", conexion))
                         {
-                            if (reader.Read())
-                            {
-                                nombreRol = reader["NombreRol"].ToString();
-                                hashGuardado = reader["Clave"].ToString();
-                                idUsuario = Convert.ToInt32(reader["IdUsuario"]);
-                                activo = Convert.ToBoolean(reader["Activo"]);
-                                nombreCompleto = reader["NombreCompleto"] == DBNull.Value ? "" : reader["NombreCompleto"].ToString();
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(hashGuardado))
-                        {
-                            bool esValido = false;
-
-                            if (!hashGuardado.StartsWith("$2"))
-                            {
-                                if (hashGuardado == pass)
-                                {
-                                    string nuevoHash = Modelos.Utils.PasswordHasher.Hash(pass);
-
-                                    using (SqlCommand updateCmd = new SqlCommand(
-                                        "UPDATE Usuarios SET Clave = @nuevoHash WHERE IdUsuario = @id", conexion))
-                                    {
-                                        updateCmd.Parameters.AddWithValue("@nuevoHash", nuevoHash);
-                                        updateCmd.Parameters.AddWithValue("@id", idUsuario);
-                                        updateCmd.ExecuteNonQuery();
-                                    }
-                                    esValido = true;
-                                }
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    esValido = Modelos.Utils.PasswordHasher.Verificar(pass, hashGuardado);
-                                }
-                                catch
-                                {
-                                    esValido = false;
-                                }
-
-                        
-                                if (!esValido)
-                                {
-                                    nombreRol = null;
-                                }
-                                else if (!activo)
-                                {
-                                    nombreRol = null;
-                                    motivoRechazo = "inactivo";
-                                }
-                                else if (!string.Equals(nombreRol, "Administrador", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    nombreRol = null;
-                                    motivoRechazo = "no_admin";
-                                }
-                                else
-                                {
-                                    nombreCompletoObtenido = nombreCompleto;
-                                }
-                                
-                            }
-
-                            if (!esValido)
-                            {
-                                nombreRol = null;
-                            }
+                            updateCmd.Parameters.AddWithValue("@nuevoHash", Modelos.Utils.PasswordHasher.Hash(pass));
+                            updateCmd.Parameters.AddWithValue("@id", idUsuario);
+                            updateCmd.ExecuteNonQuery();
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        conexionFallida = true;     
-                        MessageBox.Show("Error de conexión al validar credenciales: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        nombreRol = null;
-                    }
+
+                    nombreCompletoObtenido = nombreCompleto;
+                    return rol;
                 }
             }
-            return nombreRol;
+            catch (Exception ex)
+            {
+                conexionFallida = true;
+                MessageBox.Show("Error de conexión al validar credenciales: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
