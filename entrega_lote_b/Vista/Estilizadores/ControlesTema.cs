@@ -253,28 +253,22 @@ namespace Vistass
 
         // Si la última fila visible no cabe completa, el grid la dibuja cortada por la mitad.
         // Se tapa esa franja con el color de fondo para que la tabla termine limpia en una fila
-        // completa (al desplazarse con la rueda o la barra la fila aparece entera).
+        // completa. Solo se consultan medidas del grid (no se tocan las filas) para no alterar el pintado.
         private void OcultarFilaParcial(Graphics g)
         {
             if (RowCount == 0 || FirstDisplayedScrollingRowIndex < 0) return;
 
+            int completas = DisplayedRowCount(false);          // filas que caben enteras
+            if (completas <= 0 || DisplayedRowCount(true) <= completas) return;   // no hay fila a medias
+
+            int ultima = FirstDisplayedScrollingRowIndex + completas - 1;
+            int fondo = GetRowDisplayRectangle(ultima, true).Bottom;
             int limite = ClientSize.Height - (HorizontalScrollBar.Visible ? HorizontalScrollBar.Height : 0);
             int ancho = ClientSize.Width - (VerticalScrollBar.Visible ? VerticalScrollBar.Width : 0);
+            if (limite <= fondo) return;
 
-            // se recorren las filas desde la primera visible sumando alturas hasta la que no cabe completa
-            int y = ColumnHeadersVisible ? ColumnHeadersHeight : 0;
-            for (int i = FirstDisplayedScrollingRowIndex; i < RowCount; i++)
-            {
-                if (!Rows[i].Visible) continue;
-                int alto = Rows[i].Height;
-                if (y + alto > limite)
-                {
-                    using (SolidBrush b = new SolidBrush(BackgroundColor))
-                        g.FillRectangle(b, 0, y, ancho, limite - y);
-                    break;
-                }
-                y += alto;
-            }
+            using (SolidBrush br = new SolidBrush(BackgroundColor))
+                g.FillRectangle(br, 0, fondo, ancho, limite - fondo);
         }
 
         protected override void OnPaint(PaintEventArgs e)
