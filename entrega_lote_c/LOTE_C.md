@@ -34,3 +34,10 @@ era otra cosa, mándame una captura). El resto lo verifiqué en pantalla.
 ## `Vista/Estilizadores/ControlesTema.cs`
 
 Este archivo ya no tapa la fila cortada del final de las tablas (esa corrección pintaba mal las filas). Reemplázalo con el de esta carpeta.
+
+## Gestión de personal: menos botones
+
+La barra tenía 9 botones en una fila. Ahora quedan visibles los de uso diario (Agregar nuevo empleado, Editar, Eliminar,
+Expediente, Exportar) y un botón **Más acciones** con un menú: Nuevo cargo, Editar cargo, Ausencias y Carga académica.
+Archivos: `frmGestionPersonal.cs` y `frmGestionPersonal.Designer.cs` (reemplazan a los del lote B).
+Los cuatro botones viejos siguen en el Designer pero ocultos, así que no se rompe ningún evento.
