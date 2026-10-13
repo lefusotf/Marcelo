@@ -32,6 +32,7 @@
             this.cmbEstadoPago = new Vistass.ComboOscuro();
             this.lblEstadoPeriodo = new System.Windows.Forms.Label();
             this.btnNuevoPago = new Vistass.BotonTema();
+            this.btnMas = new Vistass.BotonTema();
             this.btnGenerarPlanilla = new Vistass.BotonTema();
             this.btnEditarPago = new Vistass.BotonTema();
             this.btnMarcarPagado = new Vistass.BotonTema();
@@ -147,6 +148,7 @@
             this.pnlBarra.Controls.Add(this.btnBoleta);
             this.pnlBarra.Controls.Add(this.btnExportarPdf);
             this.pnlBarra.Controls.Add(this.btnCierrePeriodo);
+            this.pnlBarra.Controls.Add(this.btnMas);
             this.pnlBarra.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlBarra.Location = new System.Drawing.Point(24, 188);
             this.pnlBarra.Name = "pnlBarra";
@@ -254,6 +256,7 @@
             // 
             this.btnGenerarPlanilla.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGenerarPlanilla.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGenerarPlanilla.Visible = false;       // ahora está en "Más acciones"
             this.btnGenerarPlanilla.Location = new System.Drawing.Point(144, 58);
             this.btnGenerarPlanilla.Name = "btnGenerarPlanilla";
             this.btnGenerarPlanilla.Size = new System.Drawing.Size(150, 38);
@@ -266,7 +269,7 @@
             // 
             this.btnEditarPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEditarPago.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnEditarPago.Location = new System.Drawing.Point(302, 58);
+            this.btnEditarPago.Location = new System.Drawing.Point(144, 58);
             this.btnEditarPago.Name = "btnEditarPago";
             this.btnEditarPago.Size = new System.Drawing.Size(90, 38);
             this.btnEditarPago.TabIndex = 6;
@@ -278,7 +281,7 @@
             // 
             this.btnMarcarPagado.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMarcarPagado.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMarcarPagado.Location = new System.Drawing.Point(400, 58);
+            this.btnMarcarPagado.Location = new System.Drawing.Point(242, 58);
             this.btnMarcarPagado.Name = "btnMarcarPagado";
             this.btnMarcarPagado.Size = new System.Drawing.Size(140, 38);
             this.btnMarcarPagado.TabIndex = 7;
@@ -290,6 +293,7 @@
             // 
             this.btnAnularPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAnularPago.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnAnularPago.Visible = false;            // ahora está en "Más acciones"
             this.btnAnularPago.Location = new System.Drawing.Point(548, 58);
             this.btnAnularPago.Name = "btnAnularPago";
             this.btnAnularPago.Size = new System.Drawing.Size(100, 38);
@@ -302,7 +306,7 @@
             // 
             this.btnBoleta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBoleta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnBoleta.Location = new System.Drawing.Point(788, 58);
+            this.btnBoleta.Location = new System.Drawing.Point(390, 58);
             this.btnBoleta.Name = "btnBoleta";
             this.btnBoleta.Size = new System.Drawing.Size(120, 38);
             this.btnBoleta.TabIndex = 9;
@@ -314,9 +318,9 @@
             // 
             this.btnExportarPdf.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarPdf.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnExportarPdf.Location = new System.Drawing.Point(916, 58);
+            this.btnExportarPdf.Location = new System.Drawing.Point(518, 58);
             this.btnExportarPdf.Name = "btnExportarPdf";
-            this.btnExportarPdf.Size = new System.Drawing.Size(130, 38);
+            this.btnExportarPdf.Size = new System.Drawing.Size(110, 38);
             this.btnExportarPdf.TabIndex = 10;
             this.btnExportarPdf.Text = "Exportar";
             this.btnExportarPdf.Tipo = Vistass.TipoBoton.Secundario;
@@ -326,6 +330,7 @@
             // 
             this.btnCierrePeriodo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCierrePeriodo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCierrePeriodo.Visible = false;         // ahora está en "Más acciones"
             this.btnCierrePeriodo.Location = new System.Drawing.Point(1054, 58);
             this.btnCierrePeriodo.Name = "btnCierrePeriodo";
             this.btnCierrePeriodo.Size = new System.Drawing.Size(130, 38);
@@ -336,6 +341,18 @@
             // 
             // pnlTabla
             // 
+            // 
+            // btnMas
+            // 
+            this.btnMas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMas.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnMas.Location = new System.Drawing.Point(636, 58);
+            this.btnMas.Name = "btnMas";
+            this.btnMas.Size = new System.Drawing.Size(150, 38);
+            this.btnMas.TabIndex = 12;
+            this.btnMas.Text = "Más acciones  ▾";
+            this.btnMas.Tipo = Vistass.TipoBoton.Secundario;
+            this.btnMas.Click += new System.EventHandler(this.btnMas_Click);
             this.pnlTabla.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
             this.pnlTabla.Controls.Add(this.dgvPagos);
             this.pnlTabla.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -410,6 +427,7 @@
         private Vistass.BotonTema btnBoleta;
         private Vistass.BotonTema btnExportarPdf;
         private Vistass.BotonTema btnCierrePeriodo;
+        private Vistass.BotonTema btnMas;
         private System.Windows.Forms.Panel pnlTabla;
         private Vistass.GridOscuro dgvPagos;
         private System.Windows.Forms.ToolTip toolTip1;

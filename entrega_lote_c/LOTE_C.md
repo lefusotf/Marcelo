@@ -41,3 +41,10 @@ La barra tenía 9 botones en una fila. Ahora quedan visibles los de uso diario (
 Expediente, Exportar) y un botón **Más acciones** con un menú: Nuevo cargo, Editar cargo, Ausencias y Carga académica.
 Archivos: `frmGestionPersonal.cs` y `frmGestionPersonal.Designer.cs` (reemplazan a los del lote B).
 Los cuatro botones viejos siguen en el Designer pero ocultos, así que no se rompe ningún evento.
+
+## Gestión de planillas: menos botones
+
+Visibles: Nuevo pago, Editar, Marcar pagado, Boleta PDF, Exportar. En **Más acciones**: Generar planilla, Anular y
+Cerrar mes (que dice "Reabrir mes" cuando el mes está cerrado). El menú copia el texto y si está habilitado de los botones originales.
+Archivos: `frmGestionPlanillas.cs` y `frmGestionPlanillas.Designer.cs`.
+Gestión de salones se dejó igual: no tiene más de 4 botones por fila.

@@ -44,6 +44,7 @@ namespace Vistass
             toolTip1.SetToolTip(btnExportarPdf, "Exportar lo que se está viendo (PDF o Excel)");
             toolTip1.SetToolTip(cmbPeriodo, "Filtrar por mes de pago");
             toolTip1.SetToolTip(cmbEstadoPago, "Filtrar por estado de pago");
+            toolTip1.SetToolTip(btnMas, "Generar planilla, anular un pago y cerrar o reabrir el mes");
             toolTip1.SetToolTip(btnBoleta, "Genera la boleta de pago (comprobante) del pago seleccionado en PDF");
 
 
@@ -529,6 +530,47 @@ namespace Vistass
             btnCierrePeriodo.Text = cerrado ? "Reabrir mes" : "Cerrar mes";
             btnCierrePeriodo.Enabled = !cerrado || esAdmin;     // reabrir: solo administrador
             btnNuevoPago.Enabled = !cerrado;
+        }
+
+        // ---------------------------------------------------------------
+        //  Menú "Más acciones": generar planilla, anular y cerrar/reabrir el mes.
+        //  Se arma cada vez que se abre, con el mismo estado (habilitado, texto) de los botones originales.
+        // ---------------------------------------------------------------
+        private sealed class ColoresMenuOscuro : ProfessionalColorTable
+        {
+            public override Color MenuItemSelected { get { return Color.FromArgb(58, 66, 98); } }
+            public override Color MenuItemBorder { get { return Color.FromArgb(58, 66, 98); } }
+            public override Color ToolStripDropDownBackground { get { return Color.FromArgb(27, 29, 38); } }
+            public override Color ImageMarginGradientBegin { get { return Color.FromArgb(27, 29, 38); } }
+            public override Color ImageMarginGradientMiddle { get { return Color.FromArgb(27, 29, 38); } }
+            public override Color ImageMarginGradientEnd { get { return Color.FromArgb(27, 29, 38); } }
+            public override Color SeparatorDark { get { return Color.FromArgb(58, 62, 82); } }
+            public override Color SeparatorLight { get { return Color.FromArgb(27, 29, 38); } }
+        }
+
+        private void btnMas_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+            menu.Renderer = new ToolStripProfessionalRenderer(new ColoresMenuOscuro());
+            menu.BackColor = Color.FromArgb(27, 29, 38);
+            menu.ForeColor = Color.FromArgb(240, 244, 252);
+            menu.Font = new Font("Segoe UI", 10F);
+            menu.ShowImageMargin = false;
+
+            Agregar(menu, btnGenerarPlanilla, btnGenerarPlanilla_Click);
+            menu.Items.Add(new ToolStripSeparator());
+            Agregar(menu, btnAnularPago, btnAnularPago_Click);
+            Agregar(menu, btnCierrePeriodo, btnCierrePeriodo_Click);   // dice "Cerrar mes" o "Reabrir mes"
+
+            menu.Closed += (s, ev) => menu.Dispose();
+            menu.Show(btnMas, new Point(0, btnMas.Height + 2));
+        }
+
+        // un elemento del menú que copia el texto y si está habilitado el botón original
+        private static void Agregar(ContextMenuStrip menu, Control original, EventHandler accion)
+        {
+            ToolStripItem item = menu.Items.Add(original.Text, null, accion);
+            item.Enabled = original.Enabled;
         }
 
         private void btnGenerarPlanilla_Click(object sender, EventArgs e)
