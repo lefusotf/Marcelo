@@ -35,12 +35,17 @@ namespace loginn
         private static readonly Dictionary<string, int> fallosPorUsuario = new Dictionary<string, int>();
         private static readonly Dictionary<string, DateTime> bloqueadoHasta = new Dictionary<string, DateTime>();
 
+        // Botón de cierre propio: al quitar la barra de título ya no existe la "X" de Windows.
+        private Panel btnSalir;
+        private bool hoverSalir = false;
+
         private string motivoRechazo = null;          
         private string nombreCompletoObtenido = "";
 
         public frmLogin()
         {
             InitializeComponent();
+            PantallaCompleta();
 
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint |
@@ -70,6 +75,7 @@ namespace loginn
             toolTip1.SetToolTip(btnIniciarSesion, "Iniciar Sesión");
             toolTip1.SetToolTip(txtUsuario, "Ingrese su nombre de usuario");
             toolTip1.SetToolTip(txtContraseña, "Ingrese su contraseña");
+            toolTip1.SetToolTip(btnSalir, "Cerrar el programa");
 
             CentrarTarjeta();
             txtUsuario.Focus();             
@@ -87,6 +93,44 @@ namespace loginn
         private void frmLogin_Resize(object sender, EventArgs e)
         {
             CentrarTarjeta();
+        }
+
+        // Pantalla completa real. Con borde normal y WindowState.Maximized, Windows deja visible la barra de
+        // título y respeta la barra de tareas. Sin borde y con el tamaño exacto del monitor se cubre todo.
+        // La tarjeta del login no se mueve: CentrarTarjeta() ya la centra al cambiar el tamaño.
+        private void PantallaCompleta()
+        {
+            FormBorderStyle = FormBorderStyle.None;
+            StartPosition = FormStartPosition.Manual;
+            WindowState = FormWindowState.Normal;
+            Bounds = Screen.PrimaryScreen.Bounds;
+
+            // Sin barra de título no hay "X", así que se dibuja una propia arriba a la derecha.
+            btnSalir = new Panel();
+            btnSalir.Size = new Size(46, 38);
+            btnSalir.Location = new Point(ClientSize.Width - btnSalir.Width - 14, 14);
+            btnSalir.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSalir.BackColor = Color.FromArgb(215, 20, 22, 30);      // el mismo fondo translúcido de la tarjeta
+            btnSalir.Cursor = Cursors.Hand;
+            btnSalir.Region = new Region(Redondeado(new Rectangle(0, 0, btnSalir.Width, btnSalir.Height), 10));
+            btnSalir.Paint += btnSalir_Paint;
+            btnSalir.MouseEnter += (s, e) => { hoverSalir = true; btnSalir.Invalidate(); };
+            btnSalir.MouseLeave += (s, e) => { hoverSalir = false; btnSalir.Invalidate(); };
+            btnSalir.Click += (s, e) => Close();
+            Controls.Add(btnSalir);
+            btnSalir.BringToFront();
+        }
+
+        private void btnSalir_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            float cx = btnSalir.Width / 2f, cy = btnSalir.Height / 2f;
+            using (Pen lapiz = new Pen(hoverSalir ? Rojo : Suave, 1.8f) { StartCap = LineCap.Round, EndCap = LineCap.Round })
+            {
+                g.DrawLine(lapiz, cx - 6, cy - 6, cx + 6, cy + 6);
+                g.DrawLine(lapiz, cx - 6, cy + 6, cx + 6, cy - 6);
+            }
         }
 
     
