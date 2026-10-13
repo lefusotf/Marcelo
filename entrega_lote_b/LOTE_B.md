@@ -11,7 +11,7 @@ Si en tu base ya existen empleados con estado civil "Unión libre", corre tambi�
 | `frmAsignarCargo.cs` | La misma ventana de "Nuevo cargo" sirve para editar. Reglas: no deja repetir nombres, pide confirmación porque el cambio afecta a todos los empleados de ese cargo, y un cargo "Docente…" no puede dejar de empezar con "Docente" (ni uno que no lo es, empezar así) porque el sistema reconoce a los docentes por ese nombre. |
 | `frmAgregarPersonal.Designer.cs` | Estado civil sin "Unión libre". |
 | `frmAsignarEquipo.cs` | Gestión de salones > Asignar equipo: el numérico ya no deja escribir más de lo disponible en la bodega (vuelve al máximo y avisa), y está desactivado hasta elegir el equipo. Además se revisa otra vez al guardar. |
-| `Vista/Estilizadores/ControlesTema.cs` | Clase nueva `NumericoLimitado` (la usan Asignar equipo y Consumibles). Incluye el arreglo del fin de tabla del lote A. |
+| `Vista/Estilizadores/ControlesTema.cs` | Clase nueva `NumericoLimitado` (la usan Asignar equipo y Consumibles). **Importante:** también corrige el arreglo del fin de tabla del lote A (la primera versión no tapaba bien la fila cortada). Si ya pegaste el A, vuelve a reemplazar este archivo con el de aquí. |
 
 Base de datos: no cambia ninguna tabla ni procedimiento. Cambió `db/BaseDeDatos_Completa.sql` solo en los datos de
 ejemplo (5 empleados que tenían "Unión libre" ahora tienen "Casado/a") y se añadió `db/07_estado_civil_sin_union_libre.sql`

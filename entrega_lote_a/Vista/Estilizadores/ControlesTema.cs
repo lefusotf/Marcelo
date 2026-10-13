@@ -261,15 +261,19 @@ namespace Vistass
             int limite = ClientSize.Height - (HorizontalScrollBar.Visible ? HorizontalScrollBar.Height : 0);
             int ancho = ClientSize.Width - (VerticalScrollBar.Visible ? VerticalScrollBar.Width : 0);
 
+            // se recorren las filas desde la primera visible sumando alturas hasta la que no cabe completa
+            int y = ColumnHeadersVisible ? ColumnHeadersHeight : 0;
             for (int i = FirstDisplayedScrollingRowIndex; i < RowCount; i++)
             {
-                Rectangle r = GetRowDisplayRectangle(i, false);
-                if (r.Height <= 0) break;                       // ya no hay más filas a la vista
-                if (r.Height >= Rows[i].Height) continue;       // fila completa
-
-                using (SolidBrush b = new SolidBrush(BackgroundColor))
-                    g.FillRectangle(b, 0, r.Top, ancho, limite - r.Top);
-                break;
+                if (!Rows[i].Visible) continue;
+                int alto = Rows[i].Height;
+                if (y + alto > limite)
+                {
+                    using (SolidBrush b = new SolidBrush(BackgroundColor))
+                        g.FillRectangle(b, 0, y, ancho, limite - y);
+                    break;
+                }
+                y += alto;
             }
         }
 
@@ -530,6 +534,36 @@ namespace Vistass
                     g.DrawLines(flecha, new[] { new PointF(cx - 4, cy - 2), new PointF(cx, cy + 2), new PointF(cx + 4, cy - 2) });
                 }
             }
+        }
+    }
+
+
+    // Un NumericUpDown deja ESCRIBIR cualquier número aunque supere el máximo. Este ayudante
+    // corrige en el acto: si se escribe (o pega) algo mayor que el máximo vuelve al máximo y avisa.
+    public static class NumericoLimitado
+    {
+        public static void Aplicar(NumericUpDown n, ErrorProvider avisos, Func<string> mensaje)
+        {
+            bool ajustando = false;
+            n.TextChanged += (s, e) =>
+            {
+                if (ajustando || n.Text.Length == 0) return;
+                decimal v;
+                if (!decimal.TryParse(n.Text, out v)) return;
+
+                if (v > n.Maximum)
+                {
+                    ajustando = true;
+                    n.Value = n.Maximum;
+                    n.Text = n.Maximum.ToString("0");
+                    n.Select(n.Text.Length, 0);
+                    ajustando = false;
+                    if (avisos != null)
+                        avisos.SetError(n, mensaje != null ? mensaje() : "El máximo permitido es " + n.Maximum.ToString("0") + ".");
+                }
+                else if (avisos != null && avisos.GetError(n).Length > 0)
+                    avisos.SetError(n, "");
+            };
         }
     }
 }

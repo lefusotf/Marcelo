@@ -261,15 +261,19 @@ namespace Vistass
             int limite = ClientSize.Height - (HorizontalScrollBar.Visible ? HorizontalScrollBar.Height : 0);
             int ancho = ClientSize.Width - (VerticalScrollBar.Visible ? VerticalScrollBar.Width : 0);
 
+            // se recorren las filas desde la primera visible sumando alturas hasta la que no cabe completa
+            int y = ColumnHeadersVisible ? ColumnHeadersHeight : 0;
             for (int i = FirstDisplayedScrollingRowIndex; i < RowCount; i++)
             {
-                Rectangle r = GetRowDisplayRectangle(i, false);
-                if (r.Height <= 0) break;                       // ya no hay más filas a la vista
-                if (r.Height >= Rows[i].Height) continue;       // fila completa
-
-                using (SolidBrush b = new SolidBrush(BackgroundColor))
-                    g.FillRectangle(b, 0, r.Top, ancho, limite - r.Top);
-                break;
+                if (!Rows[i].Visible) continue;
+                int alto = Rows[i].Height;
+                if (y + alto > limite)
+                {
+                    using (SolidBrush b = new SolidBrush(BackgroundColor))
+                        g.FillRectangle(b, 0, y, ancho, limite - y);
+                    break;
+                }
+                y += alto;
             }
         }
 
