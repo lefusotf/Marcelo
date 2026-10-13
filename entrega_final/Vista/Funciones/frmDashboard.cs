@@ -118,7 +118,15 @@ namespace pagina_principal
             timerInsignias.Tick += (s, ev) => ActualizarInsignias();
             timerInsignias.Start();
 
-            PantallaCompleta();
+            // Ventana normal de Windows, maximizada: barra de título con minimizar / restaurar / cerrar y sin hueco
+            // hasta la barra de tareas. Si el usuario pulsa "restaurar", vuelve a un tamaño cómodo y centrado.
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.MinimizeBox = true;
+            this.MaximizeBox = true;
+            this.WindowState = FormWindowState.Normal;
+            this.ClientSize = new Size(1280, 720);
+            this.CenterToScreen();
+            this.WindowState = FormWindowState.Maximized;
 
             filtroRueda = new RuedaMenu(this);
             Application.AddMessageFilter(filtroRueda);
@@ -127,19 +135,6 @@ namespace pagina_principal
             pnlNavegacion.MouseMove += pnlNavegacion_MouseMove;
             pnlNavegacion.MouseUp += pnlNavegacion_MouseUp;
             pnlNavegacion.MouseLeave += pnlNavegacion_MouseLeave;
-        }
-
-        // Pantalla completa real. Con borde normal, Windows deja visible la barra de título y respeta la barra de
-        // tareas. Sin borde y con el tamaño exacto del monitor se cubre todo. Las secciones se acomodan solas
-        // porque el contenedor (pnlContenedor) está en Dock = Fill. Se sale con "Cerrar sesión" o con Alt+F4.
-        private void PantallaCompleta()
-        {
-            Screen pantalla = Screen.FromControl(this);
-            this.WindowState = FormWindowState.Normal;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.Manual;
-            this.MaximumSize = pantalla.Bounds.Size;        // sin este límite la ventana se recortaría al área de trabajo
-            this.Bounds = pantalla.Bounds;
         }
 
         private void frmDashboard_FormClosing(object sender, FormClosingEventArgs e)
