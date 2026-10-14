@@ -1,0 +1,39 @@
+{
+  "fecha": "2026-10-14",
+  "nota": "Lista de enlaces externos y el modo en que se comprobaron. 'abiertos_directamente' = una petición HTTP real devolvio contenido o 200 desde el entorno de construccion. 'vistos_en_busqueda' = la URL exacta aparecio en los resultados del buscador ese dia; no se abrio directamente porque learn.microsoft.com, git-scm.com y code.visualstudio.com no eran alcanzables desde el entorno (sin resolucion DNS o bloqueo del proxy). Cualquier URL que no este en estas listas se considera NO VERIFICADA.",
+  "abiertos_directamente": [
+    "https://dotnet.microsoft.com/en-us/download/dotnet"
+  ],
+  "vistos_en_busqueda": [
+    "https://dotnet.microsoft.com/en-us/download/dotnet/10.0",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/tutorials/",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/tutorials/hello-world",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/overview",
+    "https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/program-structure/top-level-statements",
+    "https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new",
+    "https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new-sdk-templates",
+    "https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs1002",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs0103",
+    "https://learn.microsoft.com/en-us/dotnet/core/install/windows",
+    "https://learn.microsoft.com/en-us/visualstudio/debugger/debugging-absolute-beginners?view=visualstudio",
+    "https://learn.microsoft.com/en-us/visualstudio/get-started/csharp/tutorial-debugger?view=vs-2022",
+    "https://code.visualstudio.com/docs/debugtest/debugging",
+    "https://code.visualstudio.com/docs/csharp/get-started",
+    "https://git-scm.com/book/en/v2",
+    "https://git-scm.com/install/windows",
+    "https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=visualstudio",
+    "https://learn.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-installation-wizard-setup?view=sql-server-ver17",
+    "https://learn.microsoft.com/en-us/ssms/install/install",
+    "https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-run-first-query?view=sql-server-ver17",
+    "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_aliases?view=powershell-7.4",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.string.indexof?view=net-10.0",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.math.abs?view=net-10.0",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.console.readline?view=net-10.0",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.int32.parse?view=net-9.0",
+    "https://learn.microsoft.com/en-us/dotnet/standard/base-types/parsing-numeric",
+    "https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions"
+  ]
+}

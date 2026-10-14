@@ -1,0 +1,18 @@
+# Artefactos de compilacion de .NET (tu codigo en practica/ y proyectos/ los genera)
+bin/
+obj/
+.vs/
+*.user
+*.suo
+TestResults/
+
+# Secretos y configuracion local: NUNCA se versionan
+*.env
+.env
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

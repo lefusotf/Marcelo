@@ -1,0 +1,1278 @@
+{
+  "_nota": "Estados de unidad: no_iniciado, en_curso, practicada, en_recuperacion, dominada, consolidada. Estados de competencia: no_demostrada, en_desarrollo, demostrada, consolidada. Un estado solo cambia con evidencia registrada (ver REGLAS_DE_APRENDIZAJE.md).",
+  "version_curso": "1.0",
+  "herramientas": {
+    "dotnet": "10 (LTS)",
+    "csharp": "14",
+    "sql_server": "2022 o 2025",
+    "verificado": "2026-10-14"
+  },
+  "ruta": {
+    "fecha_inicio": null,
+    "semana_actual": 0,
+    "sesion_actual": 0
+  },
+  "diagnostico": {
+    "estado": "pendiente",
+    "fecha": null,
+    "resultados": null
+  },
+  "unidades": {
+    "0.1": {
+      "titulo": "Qué es programar y cómo funciona un programa",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "0.2": {
+      "titulo": "Terminal, archivos y carpetas; instalación y verificación del entorno",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "0.3": {
+      "titulo": "Tu primer proyecto, tu bitácora y Git mínimo",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "0.4": {
+      "titulo": "Errores, depurador y documentación",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.1": {
+      "titulo": "Variables, constantes y tipos de datos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.2": {
+      "titulo": "Entrada y salida por consola",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.3": {
+      "titulo": "Operadores aritméticos, relacionales y lógicos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.4": {
+      "titulo": "Conversión y validación de datos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.5": {
+      "titulo": "Condicionales: if y else",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.6": {
+      "titulo": "Condicionales: switch y expresiones switch",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.7": {
+      "titulo": "Bucles: while y do-while",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.8": {
+      "titulo": "Bucles: for, foreach y bucles anidados",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.9": {
+      "titulo": "Métodos, parámetros y valores de retorno",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.10": {
+      "titulo": "Ámbito de las variables y diseño con métodos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.11": {
+      "titulo": "Arrays",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.12": {
+      "titulo": "Listas (List<T>)",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.13": {
+      "titulo": "Cadenas de texto",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.14": {
+      "titulo": "Pseudocódigo y diagramas de flujo",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "1.15": {
+      "titulo": "Depuración y lectura de código",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.1": {
+      "titulo": "Descomposición de problemas y modelo entrada–proceso–salida",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.2": {
+      "titulo": "Construcción de algoritmos y trazas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.3": {
+      "titulo": "Casos límite y validación de requisitos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.4": {
+      "titulo": "Patrones: conteo y acumulación",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.5": {
+      "titulo": "Patrones: búsqueda y selección",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.6": {
+      "titulo": "Patrones: clasificación y agrupación",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.7": {
+      "titulo": "Análisis de errores y corrección de algoritmos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.8": {
+      "titulo": "Complejidad algorítmica introductoria",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "2.9": {
+      "titulo": "Explicar y comparar soluciones",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.1": {
+      "titulo": "Clases y objetos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.2": {
+      "titulo": "Propiedades, constructores y encapsulación",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.3": {
+      "titulo": "Miembros estáticos, archivos y espacios de nombres",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.4": {
+      "titulo": "Composición y relaciones entre objetos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.5": {
+      "titulo": "Interfaces",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.6": {
+      "titulo": "Herencia y polimorfismo",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.7": {
+      "titulo": "Enums, structs, records y tipos por valor y por referencia",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.8": {
+      "titulo": "Colecciones genéricas y genéricos propios",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.9": {
+      "titulo": "Manejo de excepciones",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.10": {
+      "titulo": "Buenas prácticas y SOLID con ejemplos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "3.11": {
+      "titulo": "LINQ esencial",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.1": {
+      "titulo": "Arrays y listas por dentro",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.2": {
+      "titulo": "Diccionarios y conjuntos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.3": {
+      "titulo": "Pilas y colas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.4": {
+      "titulo": "Búsqueda lineal y binaria",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.5": {
+      "titulo": "Ordenamiento básico",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.6": {
+      "titulo": "Ordenamiento eficiente y ordenamiento de la biblioteca",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.7": {
+      "titulo": "Recursividad básica",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.8": {
+      "titulo": "Big O e intuición de complejidad",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "4.9": {
+      "titulo": "Elegir la estructura según el problema",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.1": {
+      "titulo": "Bases de datos relacionales, SQL Server y SSMS",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.2": {
+      "titulo": "Claves y relaciones",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.3": {
+      "titulo": "SELECT, WHERE y ORDER BY",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.4": {
+      "titulo": "Funciones de agregación, GROUP BY y HAVING",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.5": {
+      "titulo": "INSERT, UPDATE y DELETE",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.6": {
+      "titulo": "JOIN",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.7": {
+      "titulo": "Subconsultas y expresiones de tabla comunes",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.8": {
+      "titulo": "Diseño de esquemas y normalización",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.9": {
+      "titulo": "Restricciones e índices",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.10": {
+      "titulo": "Transacciones",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.11": {
+      "titulo": "Consultas parametrizadas e inyección SQL",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "5.12": {
+      "titulo": "Diseñar una base de datos desde requisitos reales",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.1": {
+      "titulo": "Conexiones, cadenas de conexión y configuración segura",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.2": {
+      "titulo": "Consultas parametrizadas y lectura de resultados",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.3": {
+      "titulo": "CRUD completo con ADO.NET",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.4": {
+      "titulo": "Separar lógica de negocio y acceso a datos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.5": {
+      "titulo": "Validación, errores y gestión de recursos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.6": {
+      "titulo": "Transacciones y consistencia de los datos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.7": {
+      "titulo": "async/await esencial",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.8": {
+      "titulo": "Entity Framework Core y comparación con ADO.NET",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "6.9": {
+      "titulo": "Migraciones y gestión del esquema",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.1": {
+      "titulo": "Git a fondo: historial, deshacer y .gitignore",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.2": {
+      "titulo": "Ramas, merge y resolución de conflictos",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.3": {
+      "titulo": "GitHub: remotos, issues y pull requests",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.4": {
+      "titulo": "Terminal productiva, convenciones de nombres y formato",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.5": {
+      "titulo": "Depuración avanzada e investigación de errores",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.6": {
+      "titulo": "Leer y revisar código ajeno",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "7.7": {
+      "titulo": "Documentación técnica y trabajo por iteraciones",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.1": {
+      "titulo": "Pruebas unitarias con xUnit",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.2": {
+      "titulo": "Casos de prueba, criterios de aceptación y pruebas de integración",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.3": {
+      "titulo": "Refactorización, duplicación y complejidad innecesaria",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.4": {
+      "titulo": "Arquitectura por capas y SOLID sin dogmatismo",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.5": {
+      "titulo": "Inyección de dependencias",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.6": {
+      "titulo": "Logging y diagnóstico de errores",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.7": {
+      "titulo": "Seguridad básica y validación de entradas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "8.8": {
+      "titulo": "Mantenimiento de aplicaciones existentes",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.1": {
+      "titulo": "Fundamentos de HTTP: solicitudes y respuestas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.2": {
+      "titulo": "HTML y CSS esenciales",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.3": {
+      "titulo": "JavaScript esencial y consumo de una API",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.4": {
+      "titulo": "ASP.NET Core: primer endpoint, rutas y controladores",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.5": {
+      "titulo": "APIs REST: verbos, códigos de estado y JSON",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.6": {
+      "titulo": "DTOs, validaciones y manejo de errores",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.7": {
+      "titulo": "Acceso a datos desde una API",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.8": {
+      "titulo": "Contraseñas y autenticación",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.9": {
+      "titulo": "Autorización",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.10": {
+      "titulo": "Configuración, secretos y variables de entorno",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.11": {
+      "titulo": "Documentación y pruebas de APIs",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "9.12": {
+      "titulo": "Publicación de una aplicación",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.1": {
+      "titulo": "Qué se espera de un desarrollador junior y cómo leer ofertas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.2": {
+      "titulo": "CV técnico honesto y GitHub profesional",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.3": {
+      "titulo": "Describir y defender decisiones técnicas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.4": {
+      "titulo": "Preguntas frecuentes de C#, SQL, algoritmos y APIs",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.5": {
+      "titulo": "Entrevistas técnicas y simulacros",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.6": {
+      "titulo": "Pruebas técnicas con tiempo limitado",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    },
+    "11.7": {
+      "titulo": "Buscar oportunidades e identificar lagunas",
+      "estado": "no_iniciado",
+      "ejercicios": {},
+      "evaluacion": null,
+      "fecha_dominio": null,
+      "ultimo_repaso": null
+    }
+  },
+  "evaluaciones": [],
+  "competencias": {
+    "M0-C1": {
+      "descripcion": "Explico con mis palabras el recorrido código fuente → compilación → ejecución y distingo errores de compilación, de ejecución y lógicos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M0-C2": {
+      "descripcion": "Creo, compilo y ejecuto un proyecto de consola desde la terminal y desde mi editor, sin guía.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M0-C3": {
+      "descripcion": "Me muevo por carpetas y creo, copio y borro archivos desde la terminal sin perderme.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M0-C4": {
+      "descripcion": "Leo un mensaje de error, localizo archivo y línea y formulo una hipótesis antes de cambiar nada.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M0-C5": {
+      "descripcion": "Uso puntos de interrupción, ejecución paso a paso y la ventana de variables para explicar qué valores toma un programa.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M0-C6": {
+      "descripcion": "Versiono mi trabajo con Git (init, add, commit, log) usando mensajes claros.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C1": {
+      "descripcion": "Elijo el tipo de dato adecuado para cada valor y justifico la elección.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C2": {
+      "descripcion": "Leo datos por consola y presento resultados con formato claro.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C3": {
+      "descripcion": "Convierto y valido entradas con TryParse sin que el programa se caiga.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C4": {
+      "descripcion": "Escribo condiciones correctas (if, else, switch) incluyendo los casos límite.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C5": {
+      "descripcion": "Escribo bucles con condición de parada correcta, sin errores de uno de más o de menos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C6": {
+      "descripcion": "Descompongo un programa en métodos con parámetros y retorno bien elegidos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C7": {
+      "descripcion": "Manipulo arrays, listas y cadenas sin salirme de rango.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C8": {
+      "descripcion": "Trazo a mano un programa con una tabla de seguimiento y predigo su salida.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M1-C9": {
+      "descripcion": "Traduzco entre pseudocódigo o diagrama de flujo y C#.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C1": {
+      "descripcion": "Descompongo un problema en entradas, proceso y salidas antes de programar.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C2": {
+      "descripcion": "Diseño un algoritmo en pseudocódigo y lo verifico con una traza antes de codificar.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C3": {
+      "descripcion": "Identifico y pruebo casos límite y detecto requisitos ambiguos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C4": {
+      "descripcion": "Aplico los patrones de conteo, acumulación, búsqueda y clasificación.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C5": {
+      "descripcion": "Localizo y corrijo errores lógicos en algoritmos que no escribí.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C6": {
+      "descripcion": "Estimo cómo crece el trabajo de un algoritmo y comparo dos estrategias.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M2-C7": {
+      "descripcion": "Explico mi solución en voz alta y defiendo por qué elegí esa estrategia.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C1": {
+      "descripcion": "Modelo las entidades de un problema como clases con estado y comportamiento.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C2": {
+      "descripcion": "Aplico encapsulación: propiedades y constructores que impiden objetos inválidos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C3": {
+      "descripcion": "Relaciono objetos mediante composición e interfaces.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C4": {
+      "descripcion": "Uso herencia y polimorfismo cuando corresponde y reconozco cuándo evitarlos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C5": {
+      "descripcion": "Elijo entre enum, struct, record y clase y explico valor frente a referencia.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C6": {
+      "descripcion": "Uso colecciones genéricas y LINQ básico para consultar datos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C7": {
+      "descripcion": "Manejo excepciones con criterio: qué capturar, qué lanzar y qué dejar subir.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M3-C8": {
+      "descripcion": "Organizo el código en archivos y espacios de nombres y aplico SOLID sin sobreingeniería.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M4-C1": {
+      "descripcion": "Elijo entre array, lista, diccionario, conjunto, pila y cola justificando los costos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M4-C2": {
+      "descripcion": "Implemento búsqueda lineal y binaria y sé cuándo aplica cada una.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M4-C3": {
+      "descripcion": "Implemento y trazo al menos dos algoritmos de ordenamiento.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M4-C4": {
+      "descripcion": "Escribo funciones recursivas con caso base correcto.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M4-C5": {
+      "descripcion": "Estimo e interpreto la complejidad (Big O) de un fragmento de código.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C1": {
+      "descripcion": "Modelo entidades y relaciones (1:1, 1:N, N:M) a partir de requisitos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C2": {
+      "descripcion": "Escribo consultas con filtros, ordenamiento, agregaciones y agrupaciones.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C3": {
+      "descripcion": "Combino tablas con JOIN y subconsultas y verifico los resultados.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C4": {
+      "descripcion": "Modifico datos con INSERT, UPDATE y DELETE de forma segura.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C5": {
+      "descripcion": "Aplico normalización, restricciones e índices con justificación.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C6": {
+      "descripcion": "Explico y prevengo la inyección SQL.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M5-C7": {
+      "descripcion": "Diseño y creo una base de datos completa desde requisitos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M6-C1": {
+      "descripcion": "Conecto C# a SQL Server con configuración segura, sin credenciales en el código.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M6-C2": {
+      "descripcion": "Implemento CRUD con consultas parametrizadas y liberación correcta de recursos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M6-C3": {
+      "descripcion": "Separo la lógica de negocio del acceso a datos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M6-C4": {
+      "descripcion": "Uso transacciones para mantener la consistencia.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M6-C5": {
+      "descripcion": "Uso async/await en operaciones de entrada y salida entendiendo qué ocurre.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M6-C6": {
+      "descripcion": "Uso EF Core (modelo, consultas, migraciones) y lo comparo con ADO.NET.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M7-C1": {
+      "descripcion": "Trabajo con ramas, resuelvo conflictos de merge y mantengo un historial legible.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M7-C2": {
+      "descripcion": "Uso GitHub: remotos, issues y pull requests.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M7-C3": {
+      "descripcion": "Aplico convenciones de nombres y formato.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M7-C4": {
+      "descripcion": "Depuro con técnicas avanzadas e investigo un error antes de pedir ayuda.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M7-C5": {
+      "descripcion": "Reviso código ajeno y escribo comentarios de revisión útiles.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M7-C6": {
+      "descripcion": "Documento un proyecto (README, comentarios XML, decisiones).",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C1": {
+      "descripcion": "Escribo pruebas unitarias significativas (AAA, casos límite) con xUnit.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C2": {
+      "descripcion": "Derivo casos de prueba a partir de criterios de aceptación.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C3": {
+      "descripcion": "Refactorizo con una red de seguridad de pruebas.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C4": {
+      "descripcion": "Estructuro una aplicación en capas con inyección de dependencias.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C5": {
+      "descripcion": "Añado registros útiles y diagnostico fallos con ellos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C6": {
+      "descripcion": "Aplico seguridad básica: valido entradas, protejo secretos y datos sensibles.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M8-C7": {
+      "descripcion": "Mantengo una aplicación existente: leo, entiendo, corrijo y amplío sin romperla.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C1": {
+      "descripcion": "Explico el ciclo petición–respuesta de HTTP y leo una petición y una respuesta reales.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C2": {
+      "descripcion": "Entiendo HTML, CSS y JavaScript lo suficiente para consumir y depurar un cliente web sencillo.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C3": {
+      "descripcion": "Construyo una API REST con rutas, verbos y códigos de estado correctos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C4": {
+      "descripcion": "Uso DTOs, validación y manejo de errores consistentes.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C5": {
+      "descripcion": "Conecto la API a SQL Server mediante EF Core.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C6": {
+      "descripcion": "Implemento autenticación y autorización y almaceno contraseñas de forma segura.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M9-C7": {
+      "descripcion": "Gestiono configuración y secretos, documento y pruebo la API y la publico.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M10-C1": {
+      "descripcion": "Planifico un proyecto: requisitos, diseño, tareas pequeñas y criterios de aceptación.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M10-C2": {
+      "descripcion": "Implemento por iteraciones, probando y versionando cada avance.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M10-C3": {
+      "descripcion": "Documento el proyecto con un README que otra persona puede seguir.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M10-C4": {
+      "descripcion": "Defiendo mis decisiones técnicas y los problemas que resolví.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M11-C1": {
+      "descripcion": "Leo ofertas laborales y contrasto sus requisitos con mis competencias reales.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M11-C2": {
+      "descripcion": "Preparo un CV y un GitHub honestos y coherentes entre sí.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M11-C3": {
+      "descripcion": "Explico y defiendo decisiones técnicas de mis proyectos.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M11-C4": {
+      "descripcion": "Resuelvo ejercicios técnicos con tiempo limitado y respondo preguntas frecuentes.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    },
+    "M11-C5": {
+      "descripcion": "Identifico mis lagunas y planifico qué estudiar a continuación.",
+      "estado": "no_demostrada",
+      "evidencias": []
+    }
+  },
+  "proyectos": {
+    "P1": {
+      "titulo": "Colección de programas de consola",
+      "estado": "no_iniciado",
+      "puntaje": null,
+      "repositorio": null
+    },
+    "P2": {
+      "titulo": "Aplicación de gestión de registros",
+      "estado": "no_iniciado",
+      "puntaje": null,
+      "repositorio": null
+    },
+    "P3": {
+      "titulo": "Aplicación conectada a SQL Server",
+      "estado": "no_iniciado",
+      "puntaje": null,
+      "repositorio": null
+    },
+    "P4": {
+      "titulo": "Aplicación estructurada con responsabilidades separadas",
+      "estado": "no_iniciado",
+      "puntaje": null,
+      "repositorio": null
+    },
+    "P5": {
+      "titulo": "API web con persistencia de datos",
+      "estado": "no_iniciado",
+      "puntaje": null,
+      "repositorio": null
+    },
+    "P6": {
+      "titulo": "Proyecto final original de portafolio",
+      "estado": "no_iniciado",
+      "puntaje": null,
+      "repositorio": null
+    }
+  },
+  "errores_recurrentes": [],
+  "sesiones": [],
+  "proxima_actividad": {
+    "tipo": "diagnostico",
+    "referencia": "evaluaciones/00-diagnostico/DIAGNOSTICO.md"
+  }
+}
