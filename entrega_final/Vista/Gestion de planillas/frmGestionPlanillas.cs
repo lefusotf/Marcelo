@@ -534,7 +534,7 @@ namespace Vistass
 
         // ---------------------------------------------------------------
         //  Menú "Más acciones": boleta PDF, exportar y anular un pago.
-        //  Se arma cada vez que se abre, con el mismo estado (habilitado, texto) de los botones originales.
+        //  Se crea una vez y, cada vez que se abre, copia el texto y el estado (habilitado) de los botones originales.
         // ---------------------------------------------------------------
         private sealed class ColoresMenuOscuro : ProfessionalColorTable
         {
@@ -548,29 +548,36 @@ namespace Vistass
             public override Color SeparatorLight { get { return Color.FromArgb(27, 29, 38); } }
         }
 
+        // El menú se crea una sola vez. No se libera al cerrarse: el clic en un elemento se procesa
+        // después del evento Closed y dejaba el error "objeto desechado: ContextMenuStrip".
+        private ContextMenuStrip menuMas;
+        private ToolStripItem itemBoleta, itemExportar, itemAnular;
+
         private void btnMas_Click(object sender, EventArgs e)
         {
-            ContextMenuStrip menu = new ContextMenuStrip();
-            menu.Renderer = new ToolStripProfessionalRenderer(new ColoresMenuOscuro());
-            menu.BackColor = Color.FromArgb(27, 29, 38);
-            menu.ForeColor = Color.FromArgb(240, 244, 252);
-            menu.Font = new Font("Segoe UI", 10F);
-            menu.ShowImageMargin = false;
+            if (menuMas == null)
+            {
+                menuMas = new ContextMenuStrip();
+                menuMas.Renderer = new ToolStripProfessionalRenderer(new ColoresMenuOscuro());
+                menuMas.BackColor = Color.FromArgb(27, 29, 38);
+                menuMas.ForeColor = Color.FromArgb(240, 244, 252);
+                menuMas.Font = new Font("Segoe UI", 10F);
+                menuMas.ShowImageMargin = false;
 
-            Agregar(menu, btnBoleta, btnBoleta_Click);               // boleta PDF del pago seleccionado
-            Agregar(menu, btnExportarPdf, btnExportarPdf_Click);
-            menu.Items.Add(new ToolStripSeparator());
-            Agregar(menu, btnAnularPago, btnAnularPago_Click);
+                itemBoleta = menuMas.Items.Add(btnBoleta.Text, null, btnBoleta_Click);
+                itemExportar = menuMas.Items.Add(btnExportarPdf.Text, null, btnExportarPdf_Click);
+                menuMas.Items.Add(new ToolStripSeparator());
+                itemAnular = menuMas.Items.Add(btnAnularPago.Text, null, btnAnularPago_Click);
 
-            menu.Closed += (s, ev) => menu.Dispose();
-            menu.Show(btnMas, new Point(0, btnMas.Height + 2));
-        }
+                Disposed += (s, ev) => menuMas.Dispose();       // se libera junto con el formulario
+            }
 
-        // un elemento del menú que copia el texto y si está habilitado el botón original
-        private static void Agregar(ContextMenuStrip menu, Control original, EventHandler accion)
-        {
-            ToolStripItem item = menu.Items.Add(original.Text, null, accion);
-            item.Enabled = original.Enabled;
+            // mismo texto y estado (habilitado) que los botones originales en este momento
+            itemBoleta.Text = btnBoleta.Text;       itemBoleta.Enabled = btnBoleta.Enabled;
+            itemExportar.Text = btnExportarPdf.Text; itemExportar.Enabled = btnExportarPdf.Enabled;
+            itemAnular.Text = btnAnularPago.Text;   itemAnular.Enabled = btnAnularPago.Enabled;
+
+            menuMas.Show(btnMas, new Point(0, btnMas.Height + 2));
         }
 
         private void btnGenerarPlanilla_Click(object sender, EventArgs e)

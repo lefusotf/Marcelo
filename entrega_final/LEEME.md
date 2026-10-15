@@ -10,3 +10,6 @@ Detalle de qué hace cada cambio: `LOTE_A.md`, `LOTE_B.md` y `LOTE_C.md` en sus 
 
 Cambio posterior: `FechaOscura.cs` (en la misma carpeta de tu proyecto donde ya está) deja el calendario desplegable con el aspecto
 normal de Windows; antes se le quitaba el tema y el encabezado del mes salía recortado.
+
+Cambio posterior: `Vista/Gestion de planillas/frmGestionPlanillas.cs`: el menú «Más acciones» ya no se libera al cerrarse
+(daba «No se puede obtener acceso al objeto desechado: ContextMenuStrip» y cerraba el panel).
