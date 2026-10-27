@@ -21,17 +21,6 @@ namespace pagina_principal
 {
     public partial class frmDashboard : Form
     {
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                const int CP_NOCLOSE_BUTTON = 0x200;
-                cp.ClassStyle |= CP_NOCLOSE_BUTTON;
-                return cp;
-            }
-        }
-
         public static string RolUsuarioActual = "";
 
         private static readonly Color Amarillo = Color.FromArgb(250, 204, 21);
@@ -139,6 +128,21 @@ namespace pagina_principal
 
         private void frmDashboard_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Cerrar con la X sale del sistema: se pide confirmación y se registra la salida.
+            // (Cerrar sesión desde el menú ya pregunta por su cuenta.)
+            if (!cerrandoSesion && e.CloseReason == CloseReason.UserClosing && !string.IsNullOrEmpty(Sesion.Rol))
+            {
+                DialogResult r = MessageBox.Show("¿Desea salir del sistema?", "Salir",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (r != DialogResult.Yes) { e.Cancel = true; return; }
+
+                try
+                {
+                    Datos.Procedimiento("sp_RegistrarAcceso", Datos.P("@Usuario", Sesion.Usuario ?? ""), Datos.P("@Resultado", "Cerró sesión"));
+                }
+                catch { }
+            }
+
             timerInsignias.Stop();
             timerMenu.Stop();
         }
@@ -451,6 +455,10 @@ namespace pagina_principal
             }
         }
 
+        private const int AltoOpcionMenu = 42;       // alto de cada opción del menú
+        private const int AltoTituloGrupo = 20;      // alto del rótulo de cada grupo (PRINCIPAL, GESTIÓN…)
+        private const int AireEntreGrupos = 8;       // espacio bajo cada grupo con el menú desplegado
+
         private void ReordenarMenu()
         {
             if (opcionesDeSeccion == null) return;
@@ -486,15 +494,15 @@ namespace pagina_principal
                 {
                     grupo.Key.Visible = true;
                     grupo.Key.Location = new Point(22, y);
-                    y += 22;
+                    y += AltoTituloGrupo;
                 }
 
                 foreach (ItemMenuLateral item in visibles)
                 {
-                    item.SetBounds(0, y, ancho, 44);
-                    y += 44;
+                    item.SetBounds(0, y, ancho, AltoOpcionMenu);
+                    y += AltoOpcionMenu;
                 }
-                y += modoCompacto ? 4 : 14;
+                y += modoCompacto ? 4 : AireEntreGrupos;
                 primero = false;
             }
 
@@ -617,6 +625,10 @@ namespace pagina_principal
                     Navegar(itmReportar, () => new frmReportarDaño()); break;
                 case "planillas":
                     Navegar(itmPlanillas, () => new frmGestionPlanillas()); break;
+                case "personal":
+                    Navegar(itmPersonal, () => new frmGestionPersonal()); break;
+                case "actividad":
+                    Navegar(itmActividad, () => new frmRegistroActividad()); break;
             }
         }
 
